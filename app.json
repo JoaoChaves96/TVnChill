@@ -1,0 +1,15 @@
+{
+  "expo": {
+    "sdkVersion": "26.0.0",
+    "facebookScheme": "fb423732801373177",
+    "name": "TV n' Chill",
+    "version": "1.0.0",
+    "slug": "testapp",
+    "ios": {
+      "bundleIdentifier": "com.lapd.tvnchill"
+    },
+    "android": {
+      "package": "com.lapd.tvnchill"
+    }
+  }
+}
