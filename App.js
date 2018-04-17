@@ -13,24 +13,9 @@ import getStartedScreen from './screen/getStarted.js';
 import friendsScreen from './screen/friends.js';
 import loggedInScreen from './screen/loggedIn.js';
 import homeScreen from './screen/home.js';
-import loginScreen from './screen/login.js';
-import signUpScreen from './screen/signup.js';
-import facebookLoginScreen from './screen/facebookLogin.js';
-import * as firebase from 'firebase';
-
-if (!firebase.apps.length) {
-  firebase.initializeApp({
-    apiKey: "AIzaSyDIrsjVU1pDbF8CKU8Mjc5Z3tMn-ApkbHg",
-    authDomain: "tvnchill.firebaseapp.com",
-    databaseURL: "https://tvnchill.firebaseio.com",
-    projectId: "tvnchill",
-    storageBucket: "tvnchill.appspot.com",
-    messagingSenderId: "69000225904"
-  });
-}
 
 export default class App extends Component {
-     render() {
+  render() {
     return <RootStack />;
   }
 }
@@ -49,15 +34,6 @@ const RootStack = StackNavigator(
     Friends: {
       screen: friendsScreen,
     },
-    Login: {
-      screen: loginScreen,
-    },
-    SignUp: {
-      screen: signUpScreen
-    },
-    FacebookLogin: {
-      screen: facebookLoginScreen
-    }
   },
   {
     initialRouteName: 'Home',

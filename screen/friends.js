@@ -15,11 +15,10 @@ export default class friendsScreen extends Component {
       const { params } = this.props.navigation.state;
       const rows = [];
       var i;
-
-      for (i = 0; i < params.data.length; i++)
+      for (i = 0; i < params.data.length; i++){
           rows.push(<View><Text>{params.data[i].name}</Text></View>)
-      
-      
+      }
+  
       return (
         <ScrollView>
           <Text>Friends:</Text>
