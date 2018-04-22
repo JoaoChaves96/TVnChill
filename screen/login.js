@@ -7,7 +7,7 @@ import * as firebase from 'firebase';
 export default class loginScreen extends React.Component {
     constructor(props) {
         super(props);
-        this.state = {email: '', password: '', error: '', loading: false };
+        this.state = { email: '', password: '', error: '', loading: false };
     }
 
     onLoginPress() {
@@ -16,6 +16,7 @@ export default class loginScreen extends React.Component {
         const { email, password } = this.state;
         firebase.auth().signInWithEmailAndPassword(email, password)
             .then(() => {
+                console.log('Logged in successfully');
                 this.setState({ error: '', loading: false });
                 this.props.navigation.navigate('LoggedIn');
             })

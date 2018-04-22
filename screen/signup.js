@@ -22,7 +22,7 @@ export default class signUpScreen extends React.Component {
                         name: name,
                         username: username,
                         email: email,
-                        facebook_id: null
+                        facebook_id: ''
                     });
                 this.props.navigation.navigate('Login');
             })

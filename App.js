@@ -18,19 +18,17 @@ import signUpScreen from './screen/signup.js';
 import facebookLoginScreen from './screen/facebookLogin.js';
 import * as firebase from 'firebase';
 
-if (!firebase.apps.length) {
-  firebase.initializeApp({
-    apiKey: "AIzaSyDIrsjVU1pDbF8CKU8Mjc5Z3tMn-ApkbHg",
-    authDomain: "tvnchill.firebaseapp.com",
-    databaseURL: "https://tvnchill.firebaseio.com",
-    projectId: "tvnchill",
-    storageBucket: "tvnchill.appspot.com",
-    messagingSenderId: "69000225904"
-  });
-}
+firebase.initializeApp({
+  apiKey: "AIzaSyDIrsjVU1pDbF8CKU8Mjc5Z3tMn-ApkbHg",
+  authDomain: "tvnchill.firebaseapp.com",
+  databaseURL: "https://tvnchill.firebaseio.com",
+  projectId: "tvnchill",
+  storageBucket: "tvnchill.appspot.com",
+  messagingSenderId: "69000225904"
+});
 
 export default class App extends Component {
-     render() {
+  render() {
     return <RootStack />;
   }
 }

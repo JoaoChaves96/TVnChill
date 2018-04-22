@@ -1,75 +1,3 @@
-/*import React, { Component } from 'react';
-import {
-  Text,
-  TouchableOpacity,
-  ScrollView,
-  View,
-  StyleSheet,
-} from 'react-native';
-import Expo, { Constants } from 'expo';
-import { StackNavigator } from 'react-navigation';
-
-export default class loggedInScreen extends Component {
-    callGraphFriends = async token => {
-      /// Look at the fields... I don't have an `about` on my profile but everything else should get returned.
-      const response = await fetch(
-        `https://graph.facebook.com/me/friends?access_token=${token}`
-      );
-      const responseJSON = JSON.stringify(await response.json());
-      info = JSON.parse(responseJSON);
-      //console.log(info.data[0]);
-      this.props.navigation.navigate('Friends', info);
-    };
-  
-    getFriends = async () => {
-      const {
-        type,
-        token,
-      } = await Expo.Facebook.logInWithReadPermissionsAsync('423732801373177', {
-        permissions: ['user_friends'],
-      });
-  
-      if (type === 'success') {
-        this.callGraphFriends(token);
-      }
-      else {
-        console.log('error on get token');
-      }
-    };
-    
-    render(){
-      const { params } = this.props.navigation.state;
-      const id = params ? params.id : null;
-      const name = params ? params.name : null;
-      const email = params ? params.email : null;
-      return (
-        <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
-          <Text>Logged in!</Text>
-          <Text> Your info was :</Text>
-          <Text> Id: {JSON.stringify(id)} </Text>
-          <Text> Name: {JSON.stringify(name)} </Text>
-          <Text> Email: {JSON.stringify(email)} </Text>
-          <TouchableOpacity style={{ paddingBottom: 10}}onPress={() => this.getFriends()}>
-          <View
-            style={{
-              width: '50%',
-              alignSelf: 'center',
-              borderRadius: 4,
-              padding: 24,
-              backgroundColor: '#3B5998',
-            }}>
-            <Text style={{ textAlign: "center", color: 'white', fontWeight: 'bold' }}>
-              Get Friends list!
-            </Text>
-          </View>
-        </TouchableOpacity>
-        </View>
-      )
-    }
-  }
-
-  module.exports = loggedInScreen;*/
-
 import React, { Component } from 'react';
 import {
   Text,
@@ -91,8 +19,31 @@ export default class loggedInScreen extends Component {
     );
     const responseJSON = JSON.stringify(await response.json());
     info = JSON.parse(responseJSON);
-    //console.log(info.data[0]);
-    this.props.navigation.navigate('Friends', info);
+    console.log(info.data);
+
+    var user = firebase.auth().currentUser;
+    var friends = '';
+
+    for (var i = 0; i < info.data.length; i++) {
+      friends = friends + ' ' + info.data[i].id;
+    }
+
+    var db_user = firebase.database().ref('users');
+    db_user.on('value', function (snapshot) {
+      snapshot.forEach(function (data) {
+        if (data.val().email.toUpperCase() == user.email.toUpperCase()) {
+          var user_key = data.key;
+
+          var facebook_id = data.val().facebook_id;
+
+          var friends_list = firebase.database().ref('friends/' + facebook_id);
+
+          friends_list.child('friends_list').set(friends);
+        }
+      })
+    });
+
+    this.props.navigation.navigate('Friends');
   };
 
   getFriends = async () => {
@@ -104,6 +55,7 @@ export default class loggedInScreen extends Component {
     });
 
     if (type === 'success') {
+      console.log('success, getting friends...');
       this.callGraphFriends(token);
     }
     else {
@@ -117,29 +69,30 @@ export default class loggedInScreen extends Component {
       `https://graph.facebook.com/me?access_token=${token}&fields=id,name,email,about,picture`
     );
     const responseJSON = JSON.stringify(await response.json());
-    info = JSON.parse(responseJSON);
-    console.log(responseJSON);
+    var info = JSON.parse(responseJSON);
     var user = firebase.auth().currentUser;
-    var email = user.email;
+    console.log('1 user info: ' + info.id);
 
-    var ref = firebase.database().ref('users');
 
-    ref.on('value', getData, errData);
+    var db_user = firebase.database().ref('users');
+    db_user.on('value', function (snapshot) {
+      snapshot.forEach(function (data) {
+        console.log(data.val().email);
+        console.log(user.email);
+        if (data.val().email.toUpperCase() == user.email.toUpperCase()) {
+          var new_ref = firebase.database().ref('users/' + data.key);
+          console.log('facebook id line.151: ' + info.id);
+          new_ref.child('facebook_id').set(info.id);
+        }
+      })
+    });
 
-    function getData(data) {
-      var user_it = data.val();
-      var keys = Object.keys(user_it);
-      for (var i = 0; i < keys.length; i++) {
-        var k = keys[i];
-        var email1 = user_it[k].email;
-        //if(email1 == email)//work in progress
-      }
-    };
-
-    function errData(data) {
-      //todo
-    };
-  };
+    console.log('2 user info: ' + info.id);
+    var friends = firebase.database().ref('friends/' + info.id);
+    friends.set({
+      friends_list: ''
+    });
+  }
 
   login = async () => {
     const {
@@ -151,22 +104,7 @@ export default class loggedInScreen extends Component {
 
     if (type === 'success') {
       this.callGraph(token);
-    }
-  };
-
-  getFriends = async () => {
-    const {
-      type,
-      token,
-    } = await Expo.Facebook.logInWithReadPermissionsAsync('423732801373177', {
-      permissions: ['user_friends'],
-    });
-
-    if (type === 'success') {
-      this.callGraphFriends(token);
-    }
-    else {
-      console.log('error on get token');
+      this.getFriends();
     }
   };
 
