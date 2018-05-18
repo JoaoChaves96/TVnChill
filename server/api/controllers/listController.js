@@ -12,7 +12,11 @@ exports.findAll = (req, res) => {
       });
 };
 
-// Find a single note with a noteId
-exports.findOne = (req, res) => {
-    res.send('oi');
+
+exports.searchMovie = (req, res) => {
+    trakt.searchMovie(req.params.MovieId).then(function(show) {
+        res.send(show)
+      }).catch(function(err) {
+        console.warn('oh noes', err);
+      });
 };

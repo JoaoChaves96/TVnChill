@@ -19,7 +19,7 @@ const api = manifest.packagerOpts.dev
 
   console.log(api)
 
-  let request = 'http://' + api + '/movies';
+  let request = 'http://' + api + '/movies/';
 
 axios.get(request)
   .then(function (response) {
