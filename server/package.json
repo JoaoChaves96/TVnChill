@@ -1,0 +1,20 @@
+{
+  "name": "server",
+  "version": "1.0.0",
+  "description": "server for TVnChill app",
+  "main": "index.js",
+  "scripts": {
+    "test": "node index.js",
+    "start": "nodemon server.js"
+  },
+  "author": "João Chaves Inês Ferreira Tomás Caldas",
+  "license": "ISC",
+  "devDependencies": {
+    "nodemon": "^1.17.4"
+  },
+  "dependencies": {
+    "express": "^4.16.3",
+    "mongoose": "^5.1.1",
+    "trakt-api": "^0.4.1"
+  }
+}

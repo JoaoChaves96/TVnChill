@@ -1,13 +1,5 @@
 import React, { Component } from 'react';
-import {
-  Text,
-  TouchableOpacity,
-  ScrollView,
-  View,
-  StyleSheet,
-} from 'react-native';
 
-import Expo, { Constants } from 'expo';
 import { StackNavigator } from 'react-navigation';
 import getStartedScreen from './screen/getStarted.js';
 import friendsScreen from './screen/friends.js';
@@ -17,6 +9,25 @@ import loginScreen from './screen/login.js';
 import signUpScreen from './screen/signup.js';
 import facebookLoginScreen from './screen/facebookLogin.js';
 import * as firebase from 'firebase';
+import axios from 'axios';
+import Expo from "expo";
+
+const { manifest } = Expo.Constants;
+const api = manifest.packagerOpts.dev
+  ? manifest.debuggerHost.split(`:`).shift().concat(`:3000`)
+  : `api.example.com`;
+
+  console.log(api)
+
+  let request = 'http://' + api + '/movies';
+
+axios.get(request)
+  .then(function (response) {
+    console.log(response);
+  })
+  .catch(function (error) {
+    console.log(error);
+  });
 
 firebase.initializeApp({
   apiKey: "AIzaSyDIrsjVU1pDbF8CKU8Mjc5Z3tMn-ApkbHg",
