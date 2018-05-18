@@ -3,41 +3,56 @@ import { View,  Text, TouchableOpacity } from 'react-native';
 import { StackNavigator } from 'react-navigation';
 import SearchBar from '../components/searchBar.js';
 import trakt from '../trakt.js';
-import SearchResult from '../components/searchResult.js';
+import SearchResults from '../components/SearchResults.js';
+import axios from 'axios';
+import Expo from "expo";
 
+
+const { manifest } = Expo.Constants;
+const api = manifest.packagerOpts.dev
+  ? manifest.debuggerHost.split(`:`).shift().concat(`:3000`)
+  : `api.example.com`;
 
 export default class searchFeed extends React.Component{
     
     state = {
         loading: false,
-        result
-        
+        movies: []
     }
    
     onPressSearch = term => {
-        this.setState({loading:true});
-        console.log("Feed received " + term);
-        this.setState({result: new trakt.searchMovie(term)}); // mudar aqui a função e atualizar a variavel result com a resposta
-        this.setState({loading: false});
+        this.searchMovie(term);
     }
 
-
+    searchMovie = term => {
+        let request = 'http://' + api + '/movies/' + term;
+        this.setState({loading: true});    
+    
+            axios.get(request).then(response => {
+                console.log(response.data[0].movie.ids.imdb);
+                this.setState({
+                    loading:false,
+                    movies: response.data
+                });
+            });
+            
+        }
 
     render(){
-        const {loading, result} = this.state;
+        const {loading, movies} = this.state;
         
         return (
-            <View >
+            <View>
                 <SearchBar
                 loading = {loading}
-                onPressSearch={this.onPressSearch}/>
-
-                <SearchResult
-                    result = {result}
+                onPressSearch={this.onPressSearch}
                 />
+               <SearchResults movies={movies} />
             </View>
         );
     }
+
+   
 
 }
 
