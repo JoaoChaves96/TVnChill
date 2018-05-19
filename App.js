@@ -83,7 +83,7 @@ const RootStack = StackNavigator(
 
   },
   {
-    initialRouteName: 'SearchFeed',
+    initialRouteName: 'Home',
     headerMode: 'none'
   }
 );

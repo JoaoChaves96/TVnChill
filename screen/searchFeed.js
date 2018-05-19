@@ -3,7 +3,7 @@ import { View,  Text, TouchableOpacity } from 'react-native';
 import { StackNavigator } from 'react-navigation';
 import SearchBar from '../components/searchBar.js';
 import trakt from '../trakt.js';
-import SearchResult from '../components/searchResult.js';
+import SearchResult from '../components/searchResults';
 
 
 export default class searchFeed extends React.Component{
@@ -17,10 +17,10 @@ export default class searchFeed extends React.Component{
     }
    
     onPressSearch = term => {
-        this.setState({loading:true});
+        /* this.setState({loading:true});
         console.log("Feed received " + term);
         this.setState({result: new trakt.searchMovie(term)}); // mudar aqui a função e atualizar a variavel result com a resposta
-        this.setState({loading: false});
+        this.setState({loading: false}); */
     }
 
 
@@ -34,9 +34,9 @@ export default class searchFeed extends React.Component{
                 loading = {loading}
                 onPressSearch={this.onPressSearch}/>
 
-                <SearchResult
+                {/* <SearchResult
                     result = {result}
-                />
+                /> */}
             </View>
         );
     }
