@@ -12,6 +12,8 @@ export default class searchFeed extends React.Component{
         loading: false,
         result
         
+
+        
     }
    
     onPressSearch = term => {
