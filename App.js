@@ -24,7 +24,7 @@ const api = manifest.packagerOpts.dev
 
 axios.get(request)
   .then(function (response) {
-    console.log(response);
+    /* console.log(response); */
   })
   .catch(function (error) {
     console.log(error);

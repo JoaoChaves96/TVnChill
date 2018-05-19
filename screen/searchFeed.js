@@ -29,7 +29,8 @@ export default class searchFeed extends React.Component{
         this.setState({loading: true});    
     
             axios.get(request).then(response => {
-                console.log(response.data[0].movie.ids.imdb);
+                console.log(response.data);
+               
                 this.setState({
                     loading:false,
                     movies: response.data

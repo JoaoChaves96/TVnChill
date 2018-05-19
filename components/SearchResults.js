@@ -6,7 +6,7 @@ const SearchResults = ({movies}) => {
     
     const movieItems = movies.map(movie => (
         <MovieListItem
-            key = {movie.movie.ids.imdb}
+            key = {movie.movie.ids.slug}
             movie = {movie}
         />
           
@@ -14,13 +14,15 @@ const SearchResults = ({movies}) => {
 
 
     return (
+        
         <ScrollView>
             <View style={styles.containerStyle}>
-                 {movieItems}
+                 {movieItems} 
             </View>
 
         </ScrollView>
 
+        
 
     );
 }
@@ -30,6 +32,7 @@ const styles= {
         marginBottom: 10,
         marginLeft:10,
         marginRight:10
+       
     }
 }
 export default SearchResults;
