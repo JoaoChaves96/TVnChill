@@ -1,31 +1,20 @@
 import React from 'react';
 import { View, Text, Image } from 'react-native';
 
-const VideoListItem = ({resultLine}) => {
-
-    const {imageStyle} = styles;
-    const {
-        title,
-        runtime,
-        rating
-    } = resutlLine.movie;
+const MovieListItem = ({movie}) => {
     return(
         <View>
-            <Image 
+            {/* <Image 
                 style= {imageStyle}
-                source={{/*uri: ir buscar */}}
-            />
-            <Text>{title}</Text>
-            <Text>{runtime}</Text>
-            <Text>{rating}</Text>
+                source={}
+            /> */}
+            <Text>{movie.movie.title}</Text>
+            <Text>{movie.score}</Text>
+            <Text>{movie.movie.overview}</Text>
         </View>
 
     );
 };
 
-const style= {
-    imageStyle: {
 
-    }
-}
-export default VideoListItem;
+export default MovieListItem;
