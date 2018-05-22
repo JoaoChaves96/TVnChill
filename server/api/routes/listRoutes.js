@@ -6,4 +6,7 @@ module.exports = (app) => {
 
     // Retrieve a single Movie with movieId
     app.get('/movies/:MovieId', movies.searchMovie);
+
+    //Retrieve movie image with tmdb id
+    app.get('/movies/getImage/:tmdbId' , movies.getMovieImage);
 }
