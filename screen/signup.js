@@ -1,7 +1,6 @@
 import React from 'react';
-import { View, Button, Text, TouchableOpacity } from 'react-native';
-import { StackNavigator } from 'react-navigation';
-import { FormLabel, FormInput, FormValidationMessage } from 'react-native-elements';
+import { View, Text, TouchableOpacity, StyleSheet } from 'react-native';
+import { FormLabel, FormInput } from 'react-native-elements';
 import firebase from 'firebase';
 
 export default class signUpScreen extends React.Component {
@@ -39,12 +38,8 @@ export default class signUpScreen extends React.Component {
         return <View>
             <TouchableOpacity onPress={this.onSignUpPress.bind(this)}>
                 <View
-                    style={{
-                        width: '30%',
-                        borderRadius: 4,
-                        padding: 24,
-                    }}>
-                    <Text style={{ textAlign: "center", color: '#3B5998', fontWeight: 'bold' }}>
+                    style={styles.button}>
+                    <Text style={styles.buttonText}>
                         Sign Up
                     </Text>
                 </View>
@@ -54,22 +49,66 @@ export default class signUpScreen extends React.Component {
 
     render() {
         return (
-            <View>
-                <FormLabel>Name</FormLabel>
-                <FormInput onChangeText={name => this.setState({ name })}
-                    placeholder='John Doe' />
-                <FormLabel>Username</FormLabel>
-                <FormInput onChangeText={username => this.setState({ username })}
-                    placeholder='johndoe' />
-                <FormLabel>Email</FormLabel>
-                <FormInput onChangeText={email => this.setState({ email })}
-                    placeholder='john@doe.com' />
-                <FormLabel>Password</FormLabel>
-                <FormInput onChangeText={password => this.setState({ password })}
-                    secureTextEntry
-                    placeholder='********' />
-                {this.renderButtonorLoading()}
+            <View style={styles.container}>
+                <View style={styles.titleView}>
+                    <Text style={styles.title}> Sign Up </Text>
+                </View>
+                <View style={styles.form}>
+                    <Text style = {styles.label}>Name</Text>
+                    <FormInput onChangeText={name => this.setState({ name })}/>
+                    <Text style = {[styles.label, {marginTop: '4%'}]}>Username</Text>
+                    <FormInput onChangeText={username => this.setState({ username })}/>
+                    <Text style = {[styles.label, {marginTop: '4%'}]}>Email</Text>
+                    <FormInput onChangeText={email => this.setState({ email })}/>
+                    <Text style={[styles.label, {marginTop: '4%'}]}>Password</Text>
+                    <FormInput onChangeText={password => this.setState({ password })}
+                    secureTextEntry/>
+                    {this.renderButtonorLoading()}
+                </View>
             </View>
         )
     }
 }
+
+const styles = StyleSheet.create({
+    container : {
+        flex:1,
+        backgroundColor:'#455561',
+    },
+    titleView : {
+        alignItems: 'center',
+        marginTop: '20%',
+    },
+    title : {
+        fontSize: 40,
+        color: '#119da4',
+        fontWeight: 'bold',
+        textShadowColor: 'rgba(0, 0, 0, 0.6)',
+        textShadowOffset: {width: 1, height: 1},
+        textShadowRadius: 1,
+    },
+    form : {
+        marginTop: '12%',
+    },
+    label : {
+        marginLeft: '8%',
+        marginBottom: '-2%',
+        fontSize: 17,
+        fontWeight: 'bold',
+        color: '#c6c7c4',
+    },
+    button : {
+        width: 140,
+        alignSelf: 'center',
+        borderRadius: 4,
+        padding: 14,
+        backgroundColor: '#119da4',
+        marginTop: '10%',
+    },
+    buttonText : {
+        textAlign: 'center',
+        color: 'white',
+        fontWeight: 'bold',
+        fontSize: 18
+    }
+});
