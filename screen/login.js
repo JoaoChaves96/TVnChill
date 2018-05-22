@@ -1,7 +1,6 @@
 import React from 'react';
-import {View, Button, Text, TouchableOpacity, Stylesheet, StyleSheet} from 'react-native';
-import {StackNavigator} from 'react-navigation';
-import {FormLabel, FormInput, FormValidationMessage} from 'react-native-elements';
+import {View, Text, TouchableOpacity, Stylesheet, StyleSheet} from 'react-native';
+import {FormInput} from 'react-native-elements';
 import * as firebase from 'firebase';
 
 export default class loginScreen extends React.Component {
@@ -33,18 +32,8 @@ export default class loginScreen extends React.Component {
         return <View>
             <TouchableOpacity onPress={this.onLoginPress.bind(this)}>
                 <View
-                    style={{
-                        width: 140,
-                        alignSelf: 'center',
-                        borderRadius: 4,
-                        padding: 14,
-                        backgroundColor: '#119da4',
-                        marginTop: '10%',
-                    }}>
-                    <Text style={{textAlign: 'center',
-                        color: 'white',
-                        fontWeight: 'bold',
-                        fontSize: 18}}>
+                    style={styles.button}>
+                    <Text style={styles.buttonText}>
                         Login
                     </Text>
                 </View>
@@ -96,10 +85,26 @@ const styles = StyleSheet.create({
     },
     label : {
         marginLeft: '8%',
+        marginBottom: '-2%',
         fontSize: 17,
         fontWeight: 'bold',
         color:'#c6c7c4',
     },
+    button : {
+        width: 140,
+        alignSelf: 'center',
+        borderRadius: 4,
+        padding: 14,
+        backgroundColor: '#119da4',
+        marginTop: '10%',
+    },
+    buttonText : {
+        textAlign: 'center',
+        color: 'white',
+        fontWeight: 'bold',
+        fontSize: 18
+    },
+
 });
 
 
