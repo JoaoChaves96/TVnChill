@@ -1,6 +1,6 @@
 import React from 'react';
 import { View, Text, TouchableOpacity, StyleSheet } from 'react-native';
-import { FormLabel, FormInput } from 'react-native-elements';
+import {FormInput } from 'react-native-elements';
 import firebase from 'firebase';
 
 export default class signUpScreen extends React.Component {
