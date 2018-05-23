@@ -2,7 +2,6 @@ import React from 'react';
 import {View, StyleSheet} from 'react-native';
 import SearchBar from '../components/searchBar.js';
 import SearchResults from '../components/SearchResults.js';
-import HeaderTab from '../components/HeaderTab.js';
 import axios from 'axios';
 import Expo from "expo";
 
@@ -43,7 +42,6 @@ export default class searchFeed extends React.Component{
         
         return (
             <View style={styles.container}>
-                <HeaderTab/>
                 <SearchBar
                 loading = {loading}
                 onPressSearch={this.onPressSearch}

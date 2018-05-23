@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import {Image, StyleSheet} from 'react-native';
 
 import { StackNavigator } from 'react-navigation';
 import getStartedScreen from './screen/getStarted.js';
@@ -12,6 +13,10 @@ import searchFeed from './screen/searchFeed.js';
 import * as firebase from 'firebase';
 import axios from 'axios';
 import Expo from "expo";
+import {DrawerNavigator, DrawerItems} from 'react-navigation';
+import FeedScreen from './screen/FeedScreen.js';
+
+import{Container, Header, Body, Content} from 'native-base';
 
 const { manifest } = Expo.Constants;
 const api = manifest.packagerOpts.dev
@@ -39,17 +44,45 @@ firebase.initializeApp({
   messagingSenderId: "69000225904"
 });
 
-
-
-
-
-
 export default class App extends Component {
 
   render() {
-    return <RootStack />;
+    return <Drawer/>;
   }
 }
+
+const DrawerComponent = (props) => (
+    <Container>
+        <Header style={{height:200, backgroundColor: '#119da4'}}>
+            <Body>
+            <Image style={styles.drawerImage}
+                   source={require('./img/logo.png')}/>
+
+            </Body>
+        </Header>
+        <Content>
+            <DrawerItems {...props}/>
+        </Content>
+    </Container>
+)
+
+const Drawer = DrawerNavigator({
+        Feed: {
+            screen: FeedScreen,
+        }
+    },
+{
+    initialRouteName: 'Feed',
+    contentComponent: DrawerComponent,
+    drawerPosition: 'left',
+    drawerWidth: 180,
+    drawerOpenRoute: 'DrawerOpen',
+    drawerCloseRoute: 'DrawerClose',
+    drawerToggleRoute: 'DrawerToggle',
+}
+);
+
+
 
 const RootStack = StackNavigator(
   {
@@ -76,12 +109,25 @@ const RootStack = StackNavigator(
     },
     SearchFeed : {
       screen : searchFeed
-    }
+    },
+    FeedScreen : {
+        screen : FeedScreen
+    },
 
   },
   {
-    initialRouteName: 'SearchFeed',
+    initialRouteName: 'FeedScreen',
     headerMode: 'none'
   }
 );
+
+const styles = StyleSheet.create({
+    drawerImage : {
+        height: 150,
+        width: 150,
+        borderRadius: 75,
+
+    }
+
+})
 
