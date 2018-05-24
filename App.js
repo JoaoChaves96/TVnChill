@@ -51,7 +51,7 @@ firebase.initializeApp({
 export default class App extends Component {
 
   render() {
-    return <Drawer/>;
+    return <RootStack/>;
   }
 }
 
@@ -129,11 +129,12 @@ const RootStack = StackNavigator(
     FeedScreen : {
         screen : FeedScreen
     },
-
-
+      Drawer: {
+        screen: Drawer,
+      }
   },
   {
-    initialRouteName: 'FeedScreen',
+    initialRouteName: 'Home',
     headerMode: 'none'
   }
 );
