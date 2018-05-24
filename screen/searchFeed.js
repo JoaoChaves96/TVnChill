@@ -1,8 +1,6 @@
 import React from 'react';
-import { View,  Text, TouchableOpacity } from 'react-native';
-import { StackNavigator } from 'react-navigation';
+import {View, StyleSheet} from 'react-native';
 import SearchBar from '../components/searchBar.js';
-import trakt from '../trakt.js';
 import SearchResults from '../components/SearchResults.js';
 import axios from 'axios';
 import Expo from "expo";
@@ -43,7 +41,7 @@ export default class searchFeed extends React.Component{
         const {loading, movies} = this.state;
         
         return (
-            <View>
+            <View style={styles.container}>
                 <SearchBar
                 loading = {loading}
                 onPressSearch={this.onPressSearch}
@@ -52,11 +50,15 @@ export default class searchFeed extends React.Component{
             </View>
         );
     }
-
-   
-
 }
 
+const styles = StyleSheet.create({
+    container: {
+        flex:1,
+        backgroundColor: '#455561',
+    }
+
+})
 
 
 module.exports = searchFeed;
