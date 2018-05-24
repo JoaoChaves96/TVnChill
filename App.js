@@ -15,6 +15,10 @@ import axios from 'axios';
 import Expo from "expo";
 import {DrawerNavigator, DrawerItems} from 'react-navigation';
 import FeedScreen from './screen/FeedScreen.js';
+import SeenScreen from './screen/SeenScreen.js';
+import WishlistScreen from './screen/WishlistScreen.js';
+import ProfileScreen from './screen/ProfileScreen.js';
+import FacebookScreen from './screen/FacebookScreen.js';
 
 import{Container, Header, Body, Content} from 'native-base';
 
@@ -61,7 +65,7 @@ const DrawerComponent = (props) => (
             </Body>
         </Header>
         <Content>
-            <DrawerItems {...props} activeTintColor='#119da4'/>
+            <DrawerItems {...props} activeTintColor='#119da4' inactiveTintColor='#455561'/>
         </Content>
     </Container>
 )
@@ -69,6 +73,18 @@ const DrawerComponent = (props) => (
 const Drawer = DrawerNavigator({
         Feed: {
             screen: FeedScreen,
+        },
+        Seen: {
+            screen: SeenScreen,
+        },
+        Wishlist: {
+            screen: WishlistScreen,
+        },
+        Profile : {
+            screen: ProfileScreen,
+        },
+        Facebook: {
+            screen: FacebookScreen,
         }
     },
 {
@@ -113,6 +129,7 @@ const RootStack = StackNavigator(
     FeedScreen : {
         screen : FeedScreen
     },
+
 
   },
   {
