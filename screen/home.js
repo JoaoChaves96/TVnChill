@@ -29,7 +29,7 @@ export default class homeScreen extends Component {
               style = {styles.image}
               source={require('../img/logo.png')}/>
 
-        {this.renderButton('Login', 'Login')}
+        {this.renderButton('Login', 'FeedScreen')}
         <TouchableOpacity style={{ paddingBottom: 30}}></TouchableOpacity>
         {this.renderButton('Sign Up', 'SignUp')}
       </ScrollView>
