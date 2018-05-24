@@ -61,7 +61,7 @@ const DrawerComponent = (props) => (
             </Body>
         </Header>
         <Content>
-            <DrawerItems {...props}/>
+            <DrawerItems {...props} activeTintColor='#119da4'/>
         </Content>
     </Container>
 )
