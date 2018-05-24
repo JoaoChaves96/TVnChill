@@ -2,12 +2,10 @@ import React, { Component } from 'react';
 import {
   Text,
   TouchableOpacity,
-  ScrollView,
   View,
   StyleSheet,
 } from 'react-native';
-import Expo, { Constants } from 'expo';
-import { StackNavigator } from 'react-navigation';
+import Expo from 'expo';
 import * as firebase from 'firebase';
 
 export default class loggedInScreen extends Component {
@@ -111,14 +109,8 @@ export default class loggedInScreen extends Component {
   renderButton = () => (
     <TouchableOpacity onPress={() => this.login()}>
       <View
-        style={{
-          width: '70%',
-          alignSelf: 'center',
-          borderRadius: 4,
-          padding: 24,
-          backgroundColor: '#3B5998',
-        }}>
-        <Text style={{ textAlign: "center", color: 'white', fontWeight: 'bold' }}>
+        style={styles.button}>
+        <Text style={styles.textButton}>
           Login with Facebook!
           </Text>
       </View>
@@ -132,14 +124,8 @@ export default class loggedInScreen extends Component {
         <TouchableOpacity style={{ paddingBottom: 10 }}></TouchableOpacity>
         <TouchableOpacity onPress={() => this.props.navigation.navigate('Start')}>
           <View
-            style={{
-              width: '70%',
-              alignSelf: 'center',
-              borderRadius: 4,
-              padding: 24,
-              backgroundColor: '#3B5998',
-            }}>
-            <Text style={{ textAlign: "center", color: 'white', fontWeight: 'bold' }}>
+            style={styles.button}>
+            <Text style={styles.textButton}>
               Get Started!
             </Text>
           </View>
@@ -150,3 +136,19 @@ export default class loggedInScreen extends Component {
 }
 
 module.exports = loggedInScreen;
+
+const styles = StyleSheet.create({
+    button: {
+        width: '70%',
+        alignSelf: 'center',
+        borderRadius: 4,
+        padding: 24,
+        backgroundColor: '#119da4',
+    },
+    textButton: {
+      textAlign: "center",
+        color: 'white',
+        fontWeight: 'bold',
+    }
+
+})

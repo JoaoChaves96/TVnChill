@@ -17,7 +17,7 @@ export default class loginScreen extends React.Component {
             .then(() => {
                 console.log('Logged in successfully');
                 this.setState({error: '', loading: false});
-                this.props.navigation.navigate('LoggedIn');
+                this.props.navigation.navigate('FeedScreen');
             })
             .catch((error) => {
                 this.setState({error: 'Authentication failed', loading: false});
