@@ -18,6 +18,7 @@ import SeenScreen from './screen/SeenScreen.js';
 import WishlistScreen from './screen/WishlistScreen.js';
 import ProfileScreen from './screen/ProfileScreen.js';
 import FacebookScreen from './screen/FacebookScreen.js';
+import ResultScreen from './screen/ResultScreen.js';
 
 import{Container, Header, Body, Content} from 'native-base';
 
@@ -125,12 +126,15 @@ const RootStack = StackNavigator(
     FeedScreen : {
         screen : FeedScreen
     },
+      Result : {
+        screen: ResultScreen
+      },
       Drawer: {
         screen: Drawer,
       }
   },
   {
-    initialRouteName: 'Home',
+    initialRouteName: 'FeedScreen',
     headerMode: 'none'
   }
 );
