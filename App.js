@@ -9,7 +9,6 @@ import homeScreen from './screen/home.js';
 import loginScreen from './screen/login.js';
 import signUpScreen from './screen/signup.js';
 import facebookLoginScreen from './screen/facebookLogin.js';
-import searchFeed from './screen/searchFeed.js';
 import * as firebase from 'firebase';
 import axios from 'axios';
 import Expo from "expo";
