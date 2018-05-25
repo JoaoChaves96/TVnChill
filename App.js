@@ -122,9 +122,6 @@ const RootStack = StackNavigator(
     FacebookLogin: {
       screen: facebookLoginScreen
     },
-    SearchFeed : {
-      screen : searchFeed
-    },
     FeedScreen : {
         screen : FeedScreen
     },
