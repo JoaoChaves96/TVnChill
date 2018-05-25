@@ -9,7 +9,6 @@ import homeScreen from './screen/home.js';
 import loginScreen from './screen/login.js';
 import signUpScreen from './screen/signup.js';
 import facebookLoginScreen from './screen/facebookLogin.js';
-import searchFeed from './screen/searchFeed.js';
 import * as firebase from 'firebase';
 import axios from 'axios';
 import Expo from "expo";
@@ -19,6 +18,7 @@ import SeenScreen from './screen/SeenScreen.js';
 import WishlistScreen from './screen/WishlistScreen.js';
 import ProfileScreen from './screen/ProfileScreen.js';
 import FacebookScreen from './screen/FacebookScreen.js';
+import ResultScreen from './screen/ResultScreen.js';
 
 import{Container, Header, Body, Content} from 'native-base';
 
@@ -123,18 +123,18 @@ const RootStack = StackNavigator(
     FacebookLogin: {
       screen: facebookLoginScreen
     },
-    SearchFeed : {
-      screen : searchFeed
-    },
     FeedScreen : {
         screen : FeedScreen
     },
+      Result : {
+        screen: ResultScreen
+      },
       Drawer: {
         screen: Drawer,
       }
   },
   {
-    initialRouteName: 'Home',
+    initialRouteName: 'FeedScreen',
     headerMode: 'none'
   }
 );
