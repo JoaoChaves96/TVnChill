@@ -96,7 +96,7 @@ export default class ResultScreen extends React.Component{
 
                 <Content style={{backgroundColor:'#455561'}}>
                     <Text style={styles.title}> Results found for {this.props.navigation.state.params.term} </Text>
-                    <SearchResults movies={movies}  />
+                    <SearchResults movies={movies}  navigation={this.props.navigation}/>
                 </Content>
             </Container>
         );
