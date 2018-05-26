@@ -32,7 +32,7 @@ export default class WishlistScreen extends React.Component{
                         <Text style={styles.movieSection}> Movies </Text>
                     </View>
                     <View>
-                        <Text> Insert movies here</Text>
+                        <Text>Insert movies here</Text>
                     </View>
                     <View style = {styles.line}>
                         <Text style={styles.movieSection}> Shows </Text>
