@@ -19,8 +19,11 @@ import WishlistScreen from './screen/WishlistScreen.js';
 import ProfileScreen from './screen/ProfileScreen.js';
 import FacebookScreen from './screen/FacebookScreen.js';
 import ResultScreen from './screen/ResultScreen.js';
+import LogoutScreen from './screen/LogoutScreen.js';
 
 import{Container, Header, Body, Content} from 'native-base';
+
+console.disableYellowBox = true;
 
 const { manifest } = Expo.Constants;
 const api = manifest.packagerOpts.dev
@@ -85,6 +88,9 @@ const Drawer = DrawerNavigator({
         },
         Facebook: {
             screen: FacebookScreen,
+        },
+        Logout : {
+          screen: LogoutScreen,
         }
     },
 {
@@ -134,7 +140,7 @@ const RootStack = StackNavigator(
       }
   },
   {
-    initialRouteName: 'FeedScreen',
+    initialRouteName: 'Home',
     headerMode: 'none'
   }
 );
