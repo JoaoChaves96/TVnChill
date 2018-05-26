@@ -1,15 +1,16 @@
 import React from 'react';
-import {Text} from 'react-native';
+import {View, TouchableOpacity, Text, StyleSheet} from 'react-native';
 import{Icon, Container, Header, Content, Left, Body} from 'native-base';
+import Expo from 'expo';
+import * as firebase from 'firebase';
 
 
 export default class FacebookScreen extends React.Component{
 
     componentDidMount() {
+        console.log('mounted')
         this.login()
-        this.props.navigation.navigate('Feed')
     }
-
     callGraphFriends = async token => {
         /// Look at the fields... I don't have an `about` on my profile but everything else should get returned.
         const response = await fetch(
@@ -41,7 +42,7 @@ export default class FacebookScreen extends React.Component{
           })
         });
     
-        this.props.navigation.navigate('Friends');
+        this.props.navigation.navigate('FeedScreen');
       };
     
       getFriends = async () => {
@@ -69,7 +70,6 @@ export default class FacebookScreen extends React.Component{
         const responseJSON = JSON.stringify(await response.json());
         var info = JSON.parse(responseJSON);
         var user = firebase.auth().currentUser;
-        console.log('1 user info: ' + info.id);
     
     
         var db_user = firebase.database().ref('users');
@@ -84,8 +84,7 @@ export default class FacebookScreen extends React.Component{
             }
           })
         });
-    
-        console.log('2 user info: ' + info.id);
+
         var friends = firebase.database().ref('friends/' + info.id);
         friends.set({
           friends_list: ''
@@ -99,15 +98,18 @@ export default class FacebookScreen extends React.Component{
         } = await Expo.Facebook.logInWithReadPermissionsAsync('423732801373177', {
           permissions: ['public_profile'],
         });
-    
+        console.log(type)
         if (type === 'success') {
-            console.log('success logging in')
+          console.log('success logging in')
           this.callGraph(token);
           this.getFriends();
+        }
+        else {
+            console.log(type)
         }
       };
 
     render(){
-        return 0;
+        return null
     }
 }
