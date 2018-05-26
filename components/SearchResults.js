@@ -4,10 +4,13 @@ import MovieListItem from './ResultListItem';
 
 const SearchResults = ({movies}) => { 
     
-    const movieItems = movies.map(movie => (
+    console.log(movies);
+    const movieItems = movies.map((movie) => (
         <MovieListItem
-            key = {movie.movie.ids.slug}
+            key = {movie.id}
             movie = {movie}
+
+           
         />
           
     ));
