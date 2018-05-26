@@ -9,33 +9,28 @@ const SearchResults = ({movies}) => {
         <MovieListItem
             key = {movie.id}
             movie = {movie}
-
-           
         />
-          
     ));
 
-
     return (
-        
         <ScrollView>
             <View style={styles.containerStyle}>
                  {movieItems} 
             </View>
-
         </ScrollView>
-
-        
-
     );
 }
 
 const styles= {
     containerStyle: {
-        marginBottom: 10,
-        marginLeft:10,
-        marginRight:10
-       
+        flex: 1,
+        flexDirection: 'row',
+        flexWrap: 'wrap',
+        alignSelf: 'flex-end',
+        justifyContent: 'space-between',
+        marginRight: '4%',
+        marginLeft: '4%',
+        marginTop: '5%',
     }
 }
 export default SearchResults;
