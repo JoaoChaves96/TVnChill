@@ -1,5 +1,5 @@
 import React from 'react';
-import {Text} from 'react-native';
+import {StyleSheet, Text, View} from 'react-native';
 import{Icon, Container, Header, Content, Left, Body} from 'native-base';
 
 
@@ -25,9 +25,51 @@ export default class WishlistScreen extends React.Component{
                 </Header>
 
                 <Content style={{backgroundColor:'#455561'}}>
-                    <Text>Wishlist</Text>
+                    <View style={{marginTop:'2%', alignItems:'center'}}>
+                        <Text style={styles.title}> Wishlist </Text>
+                    </View>
+                    <View style = {styles.line}>
+                        <Text style={styles.movieSection}> Movies </Text>
+                    </View>
+                    <View>
+                        <Text> Insert movies here</Text>
+                    </View>
+                    <View style = {styles.line}>
+                        <Text style={styles.movieSection}> Shows </Text>
+                    </View>
+                    <View>
+                        <Text> Insert shows here</Text>
+                    </View>
                 </Content>
             </Container>
         );
     }
 }
+
+const styles = StyleSheet.create({
+    line : {
+        borderBottomColor: '#119da4',
+        borderBottomWidth: 1,
+        marginLeft: '4%',
+        marginRight: '4%',
+        marginTop:'3%',
+    },
+    movieSection: {
+        fontSize: 19,
+        color: "#119da4",
+        fontWeight: 'bold',
+        textShadowColor: 'rgba(0, 0, 0, 0.6)',
+        textShadowOffset: {width: 1, height: 1},
+        textShadowRadius: 1,
+        marginBottom: '1%'
+    },
+    title : {
+        fontSize: 30,
+        color: "#119da4",
+        fontWeight: 'bold',
+        textShadowColor: 'rgba(0, 0, 0, 0.6)',
+        textShadowOffset: {width: 1, height: 1},
+        textShadowRadius: 1,
+        marginBottom: '1%',
+    }
+});
