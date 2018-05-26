@@ -25,6 +25,14 @@ exports.searchMovie = (req, res) => {
       });
 };
 
+exports.getRating = (req,res) => {
+    trakt.movieRatings(req.params.MovieId).then(function (show) {
+        res.send(show)
+    }).catch(function (err) {
+        console.warn('oh noes', err);
+    });
+};
+
 exports.getMovieImage = (req, res) => {
   MovieDB.movieImages({ id: req.params.tmdbId}, (err, response) => {
     if(response == null) {

@@ -13,7 +13,8 @@ const api = manifest.packagerOpts.dev
 export default class ResultScreen extends React.Component{
 
     state = {
-        movies : []
+        movies : [],
+
     }
 
     componentWillMount() {
@@ -25,10 +26,24 @@ export default class ResultScreen extends React.Component{
 
         axios.get(request).then(response => {
             console.log(response.data);
+            this.getRating(response.data[0].movie.ids.trakt);
+            aux = [];
+
+            response.data.map(function(movie) {
+                aux.push({id: movie.movie.ids.trakt, title: movie.movie.title, rating: this.getRating(movie.movie.ids.trakt)})
+            })
 
             this.setState({
-                movies: response.data
-            });
+                movies: aux
+            })
+        });
+    };
+
+    getRating = term => {
+        let request = 'http://' + api + '/movies/getRating/' + term;
+
+        axios.get(request).then(response => {
+            return response.data.rating;
         });
     }
 

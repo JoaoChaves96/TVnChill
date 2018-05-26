@@ -9,4 +9,6 @@ module.exports = (app) => {
 
     //Retrieve movie image with tmdb id
     app.get('/movies/getImage/:tmdbId' , movies.getMovieImage);
+
+    app.get('/movies/getRating/:MovieId', movies.getRating);
 }

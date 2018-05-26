@@ -8,9 +8,9 @@ const MovieListItem = ({movie}) => {
                 style= {imageStyle}
                 source={}
             /> */}
-            <Text>{movie.movie.title}</Text>
-            <Text>{movie.score}</Text>
-            <Text>{movie.movie.overview}</Text>
+            <Text> Oi </Text>
+            <Text>{movie.title}</Text>
+            <Text>{movie.rating}</Text>
         </View>
 
     );
