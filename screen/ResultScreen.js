@@ -13,30 +13,68 @@ const api = manifest.packagerOpts.dev
 export default class ResultScreen extends React.Component{
 
     state = {
-        movies : []
+        aux : [],
+        movies :[],
+        images : []
+        
+
     }
 
-    componentWillMount() {
+     componentWillMount() {
         this.searchMovie(this.props.navigation.state.params.term);
-    }
+    } 
 
-    searchMovie = term => {
+    searchMovie =  (term) => {
         let request = 'http://' + api + '/movies/' + term;
+        
+        axios.get(request).then((response) => {
 
-        axios.get(request).then(response => {
-            console.log(response.data);
+            response.data.map(movie => (
 
-            this.setState({
-                movies: response.data
-            });
-        });
-    }
+                request = 'http://' + api + '/movies/getRating/' + movie.movie.ids.trakt,
+
+                axios.get(request).then(response2 => {
+                    //this.state.movies.push({id:movie.movie.ids.trakt, title: movie.movie.title, rating: response2.data.rating})
+
+                    
+                    request = 'http://' + api + '/movies/getImage/' + movie.movie.ids.tmdb
+
+                    axios.get(request).then(response3 => {
+                        if(response3.data.file_path == undefined){
+                            this.state.movies.push({id:movie.movie.ids.trakt, title: movie.movie.title, rating: response2.data.rating, image:"https://vignette.wikia.nocookie.net/advenutres-of-powerpuff-girls-z/images/4/4e/Popeye.png/revision/latest/scale-to-width-down/185?cb=20170224034600" })
+                            //this.state.images.push("https://vignette.wikia.nocookie.net/advenutres-of-powerpuff-girls-z/images/4/4e/Popeye.png/revision/latest/scale-to-width-down/185?cb=20170224034600");
+                        }
+                        else {
+                            url = "http://image.tmdb.org/t/p/w185//" + response3.data.file_path;
+                            //this.state.images.push(url);
+                            this.state.movies.push({id:movie.movie.ids.trakt, title: movie.movie.title, rating: response2.data.rating, image:url })
+                            
+                        }
+                        this.setState(
+                            this.state
+                        )
+                        this.state
+                    })
 
 
+                    /* this.setState(
+                        this.state
+                    )
+                    this.state */
+                })
+
+            ))
+
+        })
+       
+           
+    } 
+    
 
     render(){
 
         const {movies} = this.state;
+        
 
         return (
             <Container contentContainerStyle={{
@@ -57,7 +95,7 @@ export default class ResultScreen extends React.Component{
                 </Header>
 
                 <Content style={{backgroundColor:'#455561'}}>
-                    <SearchResults movies={movies} />
+                    <SearchResults movies={movies}  />
                 </Content>
             </Container>
         );
