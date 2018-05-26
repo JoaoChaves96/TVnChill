@@ -1,9 +1,33 @@
 import React from 'react';
 import {View,Text, StyleSheet} from 'react-native';
 import{Icon, Container, Header, Content, Left, Body} from 'native-base';
+import * as firebase from 'firebase';
 
 
 export default class SeenScreen extends React.Component{
+
+    constructor(props) {
+        super(props);
+
+        this.user = firebase.auth().currentUser;
+    }
+
+    state = {
+        email : ''
+    }
+
+    componentWillMount() {
+        if(this.user != null){
+            this.setState({email: this.user.email});
+        }
+
+        this.getSeenMovies(this.state.email);
+    }
+
+    getSeenMovies = email => {
+        firebase.database().ref('users')
+    }
+
 
     render(){
         return (
@@ -32,7 +56,7 @@ export default class SeenScreen extends React.Component{
                         <Text style={styles.movieSection}> Movies </Text>
                     </View>
                     <View>
-                        <Text> Insert movies here</Text>
+                        <Text>{this.state.email}</Text>
                     </View>
                     <View style = {styles.line}>
                         <Text style={styles.movieSection}> Shows </Text>
