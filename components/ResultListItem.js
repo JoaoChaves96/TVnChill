@@ -5,7 +5,7 @@ import { withNavigation } from 'react-navigation';
  const ResultListItem = ({data, navigation}) => {
     return(
         <View style={{width: 100, alignItems:'center', marginBottom:'5%'}}>
-            <TouchableHighlight onPress={() => navigation.navigate('MovieScreen', {movie: movie})}>
+            <TouchableHighlight onPress={() => navigation.navigate('MovieScreen', {movie: data})}>
              <Image 
              style={{width: 95, height: 130}}
                 source={{uri: data.image }}
