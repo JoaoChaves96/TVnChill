@@ -2,7 +2,7 @@ import React from 'react';
 import {View,Text, StyleSheet, ActivityIndicator} from 'react-native';
 import{Icon, Container, Header, Content, Left, Body} from 'native-base';
 import * as firebase from 'firebase';
-import SearchResults from '../components/SearchResults.js'
+import SeenMoviesResults from '../components/SeenMoviesResults'
 import Expo from "expo";
 import axios from "axios/index";
 
@@ -80,43 +80,7 @@ export default class SeenScreen extends React.Component{
         })
     }
 
-    /*     searchMovie =  (term) => {
-        let request = 'http://' + api + '/movies/' + term;
-        
-        axios.get(request).then((response) => {
- 
-            response.data.map(movie => (
- 
-                request = 'http://' + api + '/movies/getRating/' + movie.movie.ids.trakt,
- 
-                axios.get(request).then(response2 => {
 
-                    request = 'http://' + api + '/movies/getImage/' + movie.movie.ids.tmdb
- 
-                    axios.get(request).then(response3 => {
-                        if(response3.data.file_path == undefined){
-                            this.state.movies.push({id:movie.movie.ids.trakt, title: movie.movie.title, rating: response2.data.rating, image:"https://vignette.wikia.nocookie.net/advenutres-of-powerpuff-girls-z/images/4/4e/Popeye.png/revision/latest/scale-to-width-down/185?cb=20170224034600" })
-                             }
-                        else {
-                            url = "http://image.tmdb.org/t/p/w185//" + response3.data.file_path;
-                            
-                            this.state.movies.push({id:movie.movie.ids.trakt, title: movie.movie.title, rating: response2.data.rating, image:url })
-                            
-                        }
-                        this.setState(
-                            this.state
-                        )
-                        this.state
-                    })
-
-                })
- 
-            ))
- 
-        })
-       
-           
-    }  */
 
 
     render(){
@@ -155,7 +119,7 @@ export default class SeenScreen extends React.Component{
                         <Text style={styles.movieSection}> Movies </Text>
                     </View>
                     <Content >
-                        <SearchResults movies={movies} />
+                        <SeenMoviesResults movies={movies} />
                     </Content>
                     <View style = {styles.line}>
                         <Text style={styles.movieSection}> Shows </Text>
