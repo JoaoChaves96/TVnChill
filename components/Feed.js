@@ -3,6 +3,10 @@ import { View,ScrollView, Text, TouchableHighlight } from 'react-native';
 
 const Feed = ({feed}) => { 
 
+    feed.sort(function(a,b){
+        return new Date(b.date) - new Date(a.date);
+      });
+      
     let i = 0
     const feedItems = []
     for (i; i < feed.length; i++) {

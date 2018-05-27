@@ -2,12 +2,10 @@ import React from 'react';
 import {Text, StyleSheet, TouchableOpacity} from 'react-native';
 import {SearchBar} from 'react-native-elements';
 import{Icon, Container, Header, Content, Left, Body} from 'native-base';
-import SearchResults from '../components/SearchResults.js';
 import Feed from '../components/Feed.js';
 import axios from "axios/index";
 import * as firebase from 'firebase';
 
-import axios from 'axios';
 import Expo from "expo";
 
 const { manifest } = Expo.Constants;
