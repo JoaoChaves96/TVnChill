@@ -5,7 +5,7 @@ import { withNavigation } from 'react-navigation';
  const MovieListItem = ({movie, navigation}) => {
     return(
         <View style={{width: 100, alignItems:'center', marginBottom:'5%'}}>
-            <TouchableHighlight onPress={() => navigation.navigate('Wishlist', {id:movie.id})}>
+            <TouchableHighlight onPress={() => navigation.navigate('MovieScreen', {movie: movie})}>
              <Image 
              style={{width: 95, height: 130}}
                 source={{uri: movie.image }}
