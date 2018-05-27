@@ -2,7 +2,7 @@ import React from 'react';
 import {Text, StyleSheet, ActivityIndicator, View} from 'react-native';
 import {Icon, Container, Header, Content, Left, Body} from 'native-base';
 import axios from "axios/index";
-import SearchResults from '../components/SearchResults.js';
+import SearchData from '../components/SearchData.js';
 import Expo from "expo";
 
 const { manifest } = Expo.Constants;
@@ -16,6 +16,7 @@ export default class ResultScreen extends React.Component{
         aux : [],
         movies :[],
         images : [],
+        shows: [],
         loaded : false
         
 
@@ -23,6 +24,7 @@ export default class ResultScreen extends React.Component{
 
      componentWillMount() {
         this.searchMovie(this.props.navigation.state.params.term);
+        this.searchShow(this.props.navigation.state.params.term);
         } 
 
     searchMovie =  (term) => {
@@ -68,6 +70,45 @@ export default class ResultScreen extends React.Component{
            
     } 
 
+    searchShow =  (term) => {
+        let request = 'http://' + api + '/shows/' + term;
+        
+        axios.get(request).then((response) => {
+
+            response.data.map(show => (
+
+                request = 'http://' + api + '/shows/getRating/' + show.show.ids.trakt,
+
+                axios.get(request).then(response2 => {
+                   
+                    request = 'http://' + api + '/shows/getImage/' + show.show.ids.tmdb
+
+                    axios.get(request).then(response3 => {
+                        if(response3.data.file_path == undefined){
+                            this.state.shows.push({id:show.show.ids.trakt, title: show.show.title, rating: response2.data.rating, image:"https://www.unesale.com/ProductImages/Large/notfound.png" })
+                            }
+                        else {
+                            url = "http://image.tmdb.org/t/p/w185//" + response3.data.file_path;
+                            //this.state.images.push(url);
+                            this.state.shows.push({id:show.show.ids.trakt, title: show.show.title, rating: response2.data.rating, image:url })
+                            
+                        }
+                        this.setState({loaded:true});
+                        this.state.shows.sort(this.compare);
+                        this.setState(
+                            this.state
+                        )
+                        this.state
+                    })
+                })
+
+            ))
+            
+
+        })
+       
+           
+    } 
     compare(a,b) {
         if (a.rating > b.rating)
           return -1;
@@ -81,7 +122,7 @@ export default class ResultScreen extends React.Component{
 
     render(){
 
-        const {movies,loaded} = this.state;
+        const {movies,loaded, shows} = this.state;
         
 
         return (
@@ -106,7 +147,14 @@ export default class ResultScreen extends React.Component{
                 { this.state.loaded ?  
                 <View>
                     <Text style={styles.title}> Results found for {this.props.navigation.state.params.term} </Text>
-                    <SearchResults movies={movies}  navigation={this.props.navigation}/>
+                    <View style = {styles.line}>
+                        <Text style={styles.movieSection}> Movies </Text>
+                    </View>
+                    <SearchData allData={movies}  navigation={this.props.navigation}/>
+                    <View style = {styles.line}>
+                        <Text style={styles.movieSection}> Shows </Text>
+                    </View>
+                    <SearchData allData={shows} navigation={this.props.navigation}/>
                 </View>
                 :
                 <View style={styles.container} > 
@@ -131,5 +179,21 @@ const styles = StyleSheet.create({
     },
     container: { 
         padding: 10
-      } 
+    },
+    line : {
+        borderBottomColor: '#119da4',
+        borderBottomWidth: 1,
+        marginLeft: '4%',
+        marginRight: '4%',
+        marginTop:'3%',
+    },
+    movieSection: {
+        fontSize: 19,
+        color: "#119da4",
+        fontWeight: 'bold',
+        textShadowColor: 'rgba(0, 0, 0, 0.6)',
+        textShadowOffset: {width: 1, height: 1},
+        textShadowRadius: 1,
+        marginBottom: '1%'
+    } 
 })
