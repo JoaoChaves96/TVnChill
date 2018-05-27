@@ -101,16 +101,19 @@ export default class ResultScreen extends React.Component{
                     </Text>
                     </Body>
                 </Header>
-                { this.state.loaded ?  
+               
                 <Content style={{backgroundColor:'#455561'}}>
+                { this.state.loaded ?  
+                <View>
                     <Text style={styles.title}> Results found for {this.props.navigation.state.params.term} </Text>
                     <SearchResults movies={movies}  navigation={this.props.navigation}/>
-                </Content>
+                </View>
                 :
                 <View style={styles.container} > 
                     <ActivityIndicator size="large" color="#119da4" /> 
                 </View> 
                 }
+                </Content>
             </Container>
         );
     }
