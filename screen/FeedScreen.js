@@ -7,6 +7,7 @@ import Feed from '../components/Feed.js';
 import axios from "axios/index";
 import * as firebase from 'firebase';
 
+import axios from 'axios';
 import Expo from "expo";
 
 const { manifest } = Expo.Constants;

@@ -1,18 +1,17 @@
 import React from 'react';
 import { View,ScrollView } from 'react-native';
-import MovieListItem from './ResultListItem';
+import ResultListItem from './ResultListItem';
 
-const SearchResults = ({movies, navigation}) => {
+const SearchData = ({allData, navigation}) => {
     
-    console.log(movies);
-    const movieItems = movies.map((movie) => (
-        <MovieListItem key = {movie.id} movie = {movie} navigation = {navigation}/>
+    const dataItems = allData.map((data) => (
+        <ResultListItem key = {data.id} data = {data} navigation = {navigation}/>
     ));
 
     return (
         <ScrollView>
             <View style={styles.containerStyle}>
-                 {movieItems} 
+                 {dataItems} 
             </View>
         </ScrollView>
     );
@@ -30,4 +29,4 @@ const styles= {
         marginTop: '5%',
     }
 }
-export default SearchResults;
+export default SearchData;
