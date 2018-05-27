@@ -1,8 +1,8 @@
 import React from 'react';
 import {Text, StyleSheet, TouchableOpacity} from 'react-native';
 import {SearchBar} from 'react-native-elements';
-import{Icon, Container, Header, Content, Left, Body} from 'native-base';
-import SearchResults from '../components/SearchResults.js';
+import  {Icon, Container, Header, Content, Left, Body} from 'native-base';
+
 
 import axios from 'axios';
 import Expo from "expo";

@@ -18,7 +18,7 @@ exports.findAll = (req, res) => {
 
 exports.searchMovie = (req, res) => {
   
-    trakt.searchMovie(req.params.MovieId).then(function(show) {
+    trakt.searchMovie(req.params.Term).then(function(show) {
      
         res.send(show)
       }).catch(function(err) {
@@ -50,16 +50,6 @@ exports.getMovieImage = (req, res) => {
     
     
   });
-}
-
-exports.getShowImage = (req, res) => {
-
-  MovieDB.tvInfo({ id: req.params.tmdbId}, (err, response) => {
-    console.log(response.backdrop_path);
-    //res.send(response.backdrop_path);
-
-  });
-  
 }
 
 exports.getMovieFromId = (req, res) => {
