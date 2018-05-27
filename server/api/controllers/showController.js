@@ -39,7 +39,7 @@ exports.getRating = (req,res) => {
 
 exports.getShowFromId = (req, res) => {
   
-    trakt.shows(req.params.id).then(function(show) {
+    trakt.show(req.params.id).then(function(show) {
       //console.log(show);
         res.send(show)
       }).catch(function(err) {

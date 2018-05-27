@@ -20,7 +20,7 @@ import ProfileScreen from './screen/ProfileScreen.js';
 import FacebookScreen from './screen/FacebookScreen.js';
 import ResultScreen from './screen/ResultScreen.js';
 import LogoutScreen from './screen/LogoutScreen.js';
-import MovieScreen from './screen/MovieScreen.js';
+import MediaScreen from './screen/MediaScreen.js';
 
 import{Container, Header, Body, Content} from 'native-base';
 
@@ -139,8 +139,8 @@ const RootStack = StackNavigator(
       Drawer: {
         screen: Drawer,
       },
-      MovieScreen: {
-        screen: MovieScreen
+      MediaScreen: {
+        screen: MediaScreen
       }
   },
   {

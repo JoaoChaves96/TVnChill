@@ -150,11 +150,11 @@ export default class ResultScreen extends React.Component{
                     <View style = {styles.line}>
                         <Text style={styles.movieSection}> Movies </Text>
                     </View>
-                    <SearchData allData={movies}  navigation={this.props.navigation}/>
+                    <SearchData allData={movies} isMovie={true} navigation={this.props.navigation}/>
                     <View style = {styles.line}>
                         <Text style={styles.movieSection}> Shows </Text>
                     </View>
-                    <SearchData allData={shows} navigation={this.props.navigation}/>
+                    <SearchData allData={shows} isMovie={false} navigation={this.props.navigation}/>
                 </View>
                 :
                 <View style={styles.container} > 

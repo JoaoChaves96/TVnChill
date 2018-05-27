@@ -3,23 +3,45 @@ import {View,Text,Image, TouchableHighlight} from 'react-native';
 import{Icon, Container, Header, Content, Left, Body} from 'native-base';
 import firebase from 'firebase';
 
-export default class MovieScreen extends React.Component{
+export default class MediaScreen extends React.Component{
     addtToWishlist = (user_key, id) => {
-        let obj  = {
-            id: id,
-            type: 'movie'
+        console.log("É MOVIE" + this.props.navigation.state.params.isMovie);
+        if(this.props.navigation.state.params.isMovie == true){
+            let obj  = {
+                id: id,
+                type: 'movie'
+            }
+            firebase.database().ref('users/' + user_key).child('wishlist').push(obj)
         }
-        firebase.database().ref('users/' + user_key).child('wishlist').push(obj)
+        else if(this.props.navigation.state.params.isMovie == false){
+            let obj  = {
+                id: id,
+                type: 'show'
+            }
+            firebase.database().ref('users/' + user_key).child('wishlist').push(obj)
+        }
+        
+        
     }
 
     addToSeen = (user_key, id) => {
         let d = new Date().toString()
+        if(this.props.navigation.state.params.isMovie == true){
         let obj = {
             id: id,
             date: d,
             type: 'movie'
         }
         firebase.database().ref('users/' + user_key).child('seen').push(obj)
+    } else if(this.props.navigation.state.params.isMovie == false){
+        let obj = {
+            id: id,
+            date: d,
+            type: 'show'
+        }
+        firebase.database().ref('users/' + user_key).child('seen').push(obj)
+    }
+        
     }
 
     addToSeen

@@ -2,10 +2,10 @@ import React from 'react';
 import { View,ScrollView } from 'react-native';
 import ResultListItem from './ResultListItem';
 
-const SearchData = ({allData, navigation}) => {
+const SearchData = ({allData, navigation,isMovie}) => {
     
     const dataItems = allData.map((data) => (
-        <ResultListItem key = {data.id} data = {data} navigation = {navigation}/>
+        <ResultListItem key = {data.id} data = {data} isMovie={isMovie} navigation = {navigation}/>
     ));
 
     return (

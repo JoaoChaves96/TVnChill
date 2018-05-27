@@ -37,14 +37,14 @@ export default class WishlistScreen extends React.Component{
         firebase.database().ref('users').child(key).child('wishlist').once('value')
         .then(function (snapshot) {
             snapshot.forEach(function (data) {
-                
+                console.log(data.val().type);
                if(data.val().type == "movie"){
                 let request = 'http://' + api + '/movies/getMovieFromId/'+ data.val().id;
                 axios.get(request).then(response => {
                     request = 'http://' + api + '/movies/getImage/' + response.data.ids.tmdb;
                     axios.get(request).then(response2 => {
                         if(response2.data.file_path == undefined){
-                            app.state.movies.push({title: response.data.title, image:"https://vignette.wikia.nocookie.net/advenutres-of-powerpuff-girls-z/images/4/4e/Popeye.png/revision/latest/scale-to-width-down/185?cb=20170224034600",id: response.data.ids.tmdb })
+                            app.state.movies.push({title: response.data.title, image:"https://www.unesale.com/ProductImages/Large/notfound.png",id: response.data.ids.tmdb })
                              }
                         else {
                             url = "http://image.tmdb.org/t/p/w185//" + response2.data.file_path;
@@ -65,7 +65,7 @@ export default class WishlistScreen extends React.Component{
                     request = 'http://' + api + '/shows/getImage/' + response.data.ids.tmdb;
                     axios.get(request).then(response2 => {
                         if(response2.data.file_path == undefined){
-                            app.state.shows.push({title: response.data.title, image:"https://vignette.wikia.nocookie.net/advenutres-of-powerpuff-girls-z/images/4/4e/Popeye.png/revision/latest/scale-to-width-down/185?cb=20170224034600",id: response.data.ids.tmdb })
+                            app.state.shows.push({title: response.data.title, image:"https://www.unesale.com/ProductImages/Large/notfound.png",id: response.data.ids.tmdb })
                             }
                         else {
                             url = "http://image.tmdb.org/t/p/w185//" + response2.data.file_path;
