@@ -74,6 +74,7 @@ export default class FeedScreen extends React.Component{
                     console.log(data.val().id)
                     let obj = {
                         id: data.val().id,
+                        type: data.val().type,
                         user: name,
                         date: d
                     }
@@ -109,6 +110,15 @@ export default class FeedScreen extends React.Component{
             console.log('OBJECT')
             console.log(o)
 
+            if (o.type === 'movie') {
+                let request = 'http://' + api + '/movies/getMovieFromId/' + o.id
+                promises.push( axios.get(request))
+            }
+            else if(o.type === 'show') {
+                let request = 'http://' + api + '/shows/getShowFromId/' + o.id
+                promises.push( axios.get(request))
+            }
+
             let request = 'http://' + api + '/movies/getMovieFromId/' + o.id
 
             promises.push( axios.get(request))
@@ -120,6 +130,7 @@ export default class FeedScreen extends React.Component{
                 let temp = app.state.feed[j]
                 let obj= {
                     id: temp.id,
+                    type: temp.type,
                     name: temp.user,
                     date: temp.date,
                     title: response.data.title
