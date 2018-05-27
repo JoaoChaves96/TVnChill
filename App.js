@@ -144,7 +144,7 @@ const RootStack = StackNavigator(
       }
   },
   {
-    initialRouteName: 'FeedScreen',
+    initialRouteName: 'Home',
     headerMode: 'none'
   }
 );

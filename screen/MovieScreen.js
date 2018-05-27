@@ -4,9 +4,27 @@ import{Icon, Container, Header, Content, Left, Body} from 'native-base';
 import firebase from 'firebase';
 
 export default class MovieScreen extends React.Component{
+    addtToWishlist = (user_key, id) => {
+        alert('called add to wish list with user_key = ' + user_key)
+        firebase.database().ref('users/' + user_key).child('wishlist').push(id)
+    }
 
-    addtToWishlist = (id) => {
-        alert(id);
+
+    findUser = (id) => {
+        let app = this
+        let user = firebase.auth().currentUser;
+
+        firebase.database().ref('users').once('value')
+            .then(function(snapshot){
+                snapshot.forEach(function(data){
+                    if (data.val().email.toUpperCase() == user.email.toUpperCase()){
+                        app.addtToWishlist(data.key, id)
+                    }
+                })
+
+            })
+
+
     }
 
     render(){
@@ -40,7 +58,7 @@ export default class MovieScreen extends React.Component{
                                 <Icon name='star' style={{color:'white'}}/>
                                 <Text style={{marginLeft:'5%', marginTop:'3%', color:'white'}}>{this.props.navigation.state.params.movie.rating}</Text>
                             </View>
-                            <TouchableHighlight style={{marginBottom:'10%'}} onPress = {() => this.addtToWishlist(this.props.navigation.state.params.movie.id)}>
+                            <TouchableHighlight style={{marginBottom:'10%'}} onPress = {() => this.findUser(this.props.navigation.state.params.movie.id)}>
                             <View style={{height:25, marginTop:'8%', flexDirection:'row', flex:1}}>
                                 <Icon name='ios-desktop' style={{color:'white'}}/>
                                 <Text style={{marginLeft:'5%', marginTop:'3%', color:'white'}}>Add to Wishlist</Text>
