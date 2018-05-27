@@ -1,6 +1,6 @@
 import React from 'react';
-import {Text} from 'react-native';
-import{Icon, Container, Header, Content, Left, Body} from 'native-base';
+import {Text, StyleSheet, ActivityIndicator, View} from 'react-native';
+import {Icon, Container, Header, Content, Left, Body} from 'native-base';
 import axios from "axios/index";
 import SearchResults from '../components/SearchResults.js';
 import Expo from "expo";
@@ -15,14 +15,15 @@ export default class ResultScreen extends React.Component{
     state = {
         aux : [],
         movies :[],
-        images : []
+        images : [],
+        loaded : false
         
 
     }
 
      componentWillMount() {
         this.searchMovie(this.props.navigation.state.params.term);
-    } 
+        } 
 
     searchMovie =  (term) => {
         let request = 'http://' + api + '/movies/' + term;
@@ -41,7 +42,7 @@ export default class ResultScreen extends React.Component{
 
                     axios.get(request).then(response3 => {
                         if(response3.data.file_path == undefined){
-                            this.state.movies.push({id:movie.movie.ids.trakt, title: movie.movie.title, rating: response2.data.rating, image:"https://vignette.wikia.nocookie.net/advenutres-of-powerpuff-girls-z/images/4/4e/Popeye.png/revision/latest/scale-to-width-down/185?cb=20170224034600" })
+                            this.state.movies.push({id:movie.movie.ids.trakt, title: movie.movie.title, rating: response2.data.rating, image:"https://www.unesale.com/ProductImages/Large/notfound.png" })
                             //this.state.images.push("https://vignette.wikia.nocookie.net/advenutres-of-powerpuff-girls-z/images/4/4e/Popeye.png/revision/latest/scale-to-width-down/185?cb=20170224034600");
                         }
                         else {
@@ -50,30 +51,37 @@ export default class ResultScreen extends React.Component{
                             this.state.movies.push({id:movie.movie.ids.trakt, title: movie.movie.title, rating: response2.data.rating, image:url })
                             
                         }
+                        this.setState({loaded:true});
+                        this.state.movies.sort(this.compare);
                         this.setState(
                             this.state
                         )
                         this.state
                     })
-
-
-                    /* this.setState(
-                        this.state
-                    )
-                    this.state */
                 })
 
             ))
+            
 
         })
        
            
     } 
+
+    compare(a,b) {
+        if (a.rating > b.rating)
+          return -1;
+        if (a.rating < b.rating)
+          return 1;
+        return 0;
+      }
+      
+      
     
 
     render(){
 
-        const {movies} = this.state;
+        const {movies,loaded} = this.state;
         
 
         return (
@@ -93,11 +101,35 @@ export default class ResultScreen extends React.Component{
                     </Text>
                     </Body>
                 </Header>
-
+               
                 <Content style={{backgroundColor:'#455561'}}>
-                    <SearchResults movies={movies}  />
+                { this.state.loaded ?  
+                <View>
+                    <Text style={styles.title}> Results found for {this.props.navigation.state.params.term} </Text>
+                    <SearchResults movies={movies}  navigation={this.props.navigation}/>
+                </View>
+                :
+                <View style={styles.container} > 
+                    <ActivityIndicator size="large" color="#119da4" /> 
+                </View> 
+                }
                 </Content>
             </Container>
         );
     }
 }
+
+const styles = StyleSheet.create({
+    title : {
+        fontSize: 19,
+        color: "#119da4",
+        fontWeight: 'bold',
+        textShadowColor: 'rgba(0, 0, 0, 0.6)',
+        textShadowOffset: {width: 1, height: 1},
+        textShadowRadius: 1,
+        marginBottom: '1%',
+    },
+    container: { 
+        padding: 10
+      } 
+})
