@@ -1,24 +1,29 @@
 import React from 'react';
-import { View,ScrollView } from 'react-native';
+import { View,ScrollView, Text, TouchableHighlight } from 'react-native';
 
 const Feed = ({feed}) => { 
-    console.log('////////// Hello from feed //////////')
-    console.log(feed);
-    /*const movieItems = movies.map((movie) => (
-        <MovieListItem
-            key = {movie.id}
-            movie = {movie}
 
-           
-        />
-          
-    ));*/
+    let i = 0
+    const feedItems = []
+    for (i; i < feed.length; i++) {
+        let d = new Date(feed[i].date).toLocaleString()
+        feedItems.push(
+            <View key={feed[i].id} style={{marginTop:'2%', backgroundColor:'#c6c7c4', borderRadius:3, padding: '2%'}}>
+                <View style={{flexDirection:'row'}}>
+                    <Text style={{ color:'#455561'}}>{feed[i].name} is watching </Text>
+                    <Text style={{color:'#455561', fontWeight:'bold'}}>{feed[i].title}</Text>
+                </View>
+            <Text style={{fontSize: 13, color:'white', textAlign: 'right', marginTop:'3%'}}>{d}</Text>
+        </View>
+        )
+    }
 
 
     return (
         
-        <ScrollView>
+        <ScrollView style={{marginTop:'7%'}}>
             <View style={styles.containerStyle}>
+                {feedItems}
             </View>
 
         </ScrollView>

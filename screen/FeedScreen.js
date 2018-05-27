@@ -107,47 +107,29 @@ export default class FeedScreen extends React.Component{
 
         for(let i = 0; i < app.state.feed.length; i++) {
             let o = app.state.feed[i]
-            let obj= {
-                id: o.id,
-                name: o.user,
-                date: o.date,
-                title: ''
-            }
             console.log('OBJECT')
             console.log(o)
 
-            let request = 'http://' + api + '/movies/' + o.id
+            let request = 'http://' + api + '/movies/getMovieFromId/' + o.id
 
-            promises.push( axios.get(request)
-            /*.then((response) => {
-                obj.title = response.data.title
-                arr.push(obj)
-            })*/)
+            promises.push( axios.get(request))
         }
 
         axios.all(promises).then(function(results) {
-            console.log('finished primses')
-            console.log(results)
+            let j = 0
             results.forEach(function(response) {
+                let temp = app.state.feed[j]
                 let obj= {
-                    /*id: o.id,
-                    name: o.name,
-                    date: o.date,*/
-                    title: ''
+                    id: temp.id,
+                    name: temp.user,
+                    date: temp.date,
+                    title: response.data.title
                 }
-                obj.title = response.data.title
                 arr.push(obj)
+                j++
             })
+            app.state.feed = arr
         })
-
-       /* axios.all(promises).then(function() {
-            console.log(arr)
-        })*/
-
-        console.log(arr)
-        //let request = 'http://' + api + '/movies/' + term;
-        
-       // axios.get(request)
     }
 
     test () {
@@ -175,16 +157,19 @@ export default class FeedScreen extends React.Component{
         setTimeout(function(){
 
             app.loadFeed()
-            app.setState(
+            setTimeout(function(){
+                app.loadFeed()
+                app.setState(
+                    app.state
+                )
                 app.state
-            )
-            app.state
-            console.log(' ------FEED--------')
-            console.log('|                  |')
-            console.log('|                  |')
-            console.log(' ------------------')
-            console.log(app.state)
-            }, 5000);
+                console.log(' ------FEED--------')
+                console.log('|                  |')
+                console.log('|                  |')
+                console.log(' ------------------')
+                console.log(app.state)
+                }, 2000);
+            }, 3000);
     }
 
     render(){
