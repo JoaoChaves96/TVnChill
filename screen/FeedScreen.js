@@ -3,15 +3,188 @@ import {Text, StyleSheet, TouchableOpacity} from 'react-native';
 import {SearchBar} from 'react-native-elements';
 import{Icon, Container, Header, Content, Left, Body} from 'native-base';
 import SearchResults from '../components/SearchResults.js';
+import Feed from '../components/Feed.js';
+import axios from "axios/index";
+import * as firebase from 'firebase';
 
-import axios from 'axios';
 import Expo from "expo";
+
+const { manifest } = Expo.Constants;
+const api = manifest.packagerOpts.dev
+    ? manifest.debuggerHost.split(`:`).shift().concat(`:3000`)
+    : `api.example.com`;
 
 export default class FeedScreen extends React.Component{
 
     state = {
         loading: false,
-        term: ''
+        term: '',
+        feed: []
+    }
+
+    processArray (arr) {
+        console.log('inside process array')
+        let app = this
+        for (i = 1; i < arr.length; i++) {
+            app.loadWithId(arr[i])
+         }
+         return 0
+    }
+
+    loadFriends (facebookId) {
+        let app = this
+        console.log('inside loadFriends')
+        console.log(facebookId)
+        let friends_list = firebase.database().ref('friends/' + facebookId);
+
+        return friends_list.once('value')
+            .then(function (snapshot) {
+                let friends = snapshot.val().friends_list;
+
+                let split = friends.split(' ');
+
+                app.processArray(split)
+                return 0
+            })
+    }
+
+    sortFeed (feed) {
+        console.log('inside sortFeed')
+        console.log(feed)
+        console.log(this.state)
+        if(feed.length !== 0) {
+            for (let i = 0; i < feed.length; i++) {
+                console.log('///////// Adding to feed...')
+                this.state.feed.push(feed[i])
+            }
+        }
+    }
+
+    getFeed (user_key, name) {
+        let app = this
+        console.log('inside get Feed!')
+        console.log(user_key)
+
+        let db_seen = firebase.database().ref('users').child(user_key).child('seen')
+        return db_seen.once('value')
+            .then(function(snapshot) {
+                let feed = []
+                snapshot.forEach(function (data) {
+                    let d = new Date(data.val().date)
+                    console.log('id!!!!!')
+                    console.log(data.val().id)
+                    let obj = {
+                        id: data.val().id,
+                        user: name,
+                        date: d
+                    }
+                    if(obj.id !== '')
+                    feed.push(obj)
+                })
+                return app.sortFeed(feed)
+            })
+    }
+
+    loadWithId (id) {
+        let app = this
+        console.log('inside loadWithId')
+        console.log(id)
+        let db_user = firebase.database().ref('users')
+        return db_user.once('value') 
+        .then(function(snapshot) { 
+            snapshot.forEach(function (data) { 
+                if (data.val().facebook_id === id) { 
+                   return app.getFeed(data.key, data.val().name)
+                }
+            })
+        })   
+    }
+
+    loadFeed () {
+        let app = this
+        let arr = []
+        let promises = []
+
+        for(let i = 0; i < app.state.feed.length; i++) {
+            let o = app.state.feed[i]
+            let obj= {
+                id: o.id,
+                name: o.user,
+                date: o.date,
+                title: ''
+            }
+            console.log('OBJECT')
+            console.log(o)
+
+            let request = 'http://' + api + '/movies/' + o.id
+
+            promises.push( axios.get(request)
+            /*.then((response) => {
+                obj.title = response.data.title
+                arr.push(obj)
+            })*/)
+        }
+
+        axios.all(promises).then(function(results) {
+            console.log('finished primses')
+            console.log(results)
+            results.forEach(function(response) {
+                let obj= {
+                    /*id: o.id,
+                    name: o.name,
+                    date: o.date,*/
+                    title: ''
+                }
+                obj.title = response.data.title
+                arr.push(obj)
+            })
+        })
+
+       /* axios.all(promises).then(function() {
+            console.log(arr)
+        })*/
+
+        console.log(arr)
+        //let request = 'http://' + api + '/movies/' + term;
+        
+       // axios.get(request)
+    }
+
+    test () {
+        let user = firebase.auth().currentUser
+        let app = this
+        console.log('firsts')
+        console.log(this.state)
+        let aux = []
+        let facebookId = ''
+        let db_user = firebase.database().ref('users');
+        return db_user.once('value')
+                .then(function(snapshot) {
+                    snapshot.forEach(function (data) {
+                        if (data.val().email.toUpperCase() == user.email.toUpperCase()) {
+                            console.log(data.val().facebook_id)
+                            return app.loadFriends(data.val().facebook_id)
+                        }
+                    })
+                })
+    }
+
+    componentWillMount() {
+        let app = this
+        app.test()
+        setTimeout(function(){
+
+            app.loadFeed()
+            app.setState(
+                app.state
+            )
+            app.state
+            console.log(' ------FEED--------')
+            console.log('|                  |')
+            console.log('|                  |')
+            console.log(' ------------------')
+            console.log(app.state)
+            }, 5000);
     }
 
     render(){
@@ -19,6 +192,7 @@ export default class FeedScreen extends React.Component{
         const {loading} = this.state;
         const searchText = <Text> Search </Text>;
         const loadingText = <Text> Loading... </Text>;
+        const {feed} = this.state
 
         return (
            <Container contentContainerStyle={{
@@ -46,6 +220,7 @@ export default class FeedScreen extends React.Component{
                            {loading ? loadingText : searchText}
                        </Text>
                    </TouchableOpacity>
+                   <Feed feed={feed} />
                </Content>
            </Container>
         );
