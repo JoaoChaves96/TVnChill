@@ -1,11 +1,11 @@
 import React from 'react';
 import { View,ScrollView } from 'react-native';
-import SeenMovies from './SeenMovies';
+import SingleResult from './SingleResult';
 
-const SeenMoviesResults = ({data,navigation}) => { 
+const ResultsToShow = ({data,navigation}) => { 
     
     const movieItems = data.map(movie => (
-        <SeenMovies
+        <SingleResult
             key = {movie.id}
             data = {movie}
             navigation = {navigation}
@@ -41,4 +41,4 @@ const styles= {
        
     }
 }
-export default SeenMoviesResults;
+export default ResultsToShow;

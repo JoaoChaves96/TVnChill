@@ -2,7 +2,7 @@ import React from 'react';
 import { View, Text, Image, TouchableHighlight } from 'react-native';
 import { withNavigation } from 'react-navigation';
 
-const SeenMovies = ({data, navigation}) => {
+const SingleResult = ({data, navigation}) => {
     return(
         <View style={{width: 100, alignItems:'center', marginBottom:'5%'}}>
             <TouchableHighlight onPress={() => navigation.navigate('Wishlist', {id:data.id})}>
@@ -17,12 +17,5 @@ const SeenMovies = ({data, navigation}) => {
     );
 };
 
-const styles= {
-    containerStyle: {
-        marginBottom: 10,
-        marginLeft:10,
-        marginRight:10
-       
-    }
-}
-export default SeenMovies;
+
+export default SingleResult;

@@ -17,7 +17,7 @@ exports.searchShow = (req, res) => {
 
 exports.getShowImage = (req, res) => {
     MovieDB.tvImages({ id: req.params.tmdbId}, (err, response) => {
-      console.log(response);
+      //console.log(response);
        if(response == null) {
         var noImg = 'noImg';
         res.send(noImg);

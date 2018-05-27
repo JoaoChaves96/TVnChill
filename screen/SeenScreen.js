@@ -2,7 +2,7 @@ import React from 'react';
 import {View,Text, StyleSheet, ActivityIndicator} from 'react-native';
 import{Icon, Container, Header, Content, Left, Body} from 'native-base';
 import * as firebase from 'firebase';
-import SeenMoviesResults from '../components/SeenMoviesResults'
+import ResultsToShow from '../components/seenAndWishlist/ResultsToShow'
 import Expo from "expo";
 import axios from "axios/index";
 
@@ -23,6 +23,7 @@ export default class SeenScreen extends React.Component{
     state = {
         email : '',
         movies : [],
+        shows: [],
         loaded : false
     }
 
@@ -37,26 +38,49 @@ export default class SeenScreen extends React.Component{
         .then(function (snapshot) {
             snapshot.forEach(function (data) {
                 
-                //app.state.movies.push(data.val().id);
-                let request = 'http://' + api + '/movies/getMovieFromId/'+ data.val().id;
-                axios.get(request).then(response => {
-                    request = 'http://' + api + '/movies/getImage/' + response.data.ids.tmdb;
-                    axios.get(request).then(response2 => {
-                        if(response2.data.file_path == undefined){
-                            app.state.movies.push({title: response.data.title, image:"https://vignette.wikia.nocookie.net/advenutres-of-powerpuff-girls-z/images/4/4e/Popeye.png/revision/latest/scale-to-width-down/185?cb=20170224034600",id: response.data.ids.tmdb })
-                             }
-                        else {
-                            url = "http://image.tmdb.org/t/p/w185//" + response2.data.file_path;
-                            app.state.movies.push({title: response.data.title, image:url, id:response.data.ids.tmdb })
-                        }
-                        app.setState({loaded: true});
-                        app.setState( 
+                
+                if(data.val().type == "movie"){
+                    let request = 'http://' + api + '/movies/getMovieFromId/'+ data.val().id;
+                    axios.get(request).then(response => {
+                        request = 'http://' + api + '/movies/getImage/' + response.data.ids.tmdb;
+                        axios.get(request).then(response2 => {
+                            if(response2.data.file_path == undefined){
+                                app.state.movies.push({title: response.data.title, image:"https://vignette.wikia.nocookie.net/advenutres-of-powerpuff-girls-z/images/4/4e/Popeye.png/revision/latest/scale-to-width-down/185?cb=20170224034600",id: response.data.ids.tmdb })
+                                 }
+                            else {
+                                url = "http://image.tmdb.org/t/p/w185//" + response2.data.file_path;
+                                app.state.movies.push({title: response.data.title, image:url, id:response.data.ids.tmdb })
+                            }
+                            app.setState({loaded: true});
+                            app.setState( 
+                                app.state 
+                            ) 
                             app.state 
-                        ) 
-                        app.state 
-                   
-                    })
-                });
+                       
+                        })
+                    });
+                   }
+                   else if (data.val().type == "show"){
+                    let request = 'http://' + api + '/shows/getShowFromId/'+ data.val().id;
+                    axios.get(request).then(response => {
+                        request = 'http://' + api + '/shows/getImage/' + response.data.ids.tmdb;
+                        axios.get(request).then(response2 => {
+                            if(response2.data.file_path == undefined){
+                                app.state.shows.push({title: response.data.title, image:"https://vignette.wikia.nocookie.net/advenutres-of-powerpuff-girls-z/images/4/4e/Popeye.png/revision/latest/scale-to-width-down/185?cb=20170224034600",id: response.data.ids.tmdb })
+                                }
+                            else {
+                                url = "http://image.tmdb.org/t/p/w185//" + response2.data.file_path;
+                                app.state.shows.push({title: response.data.title, image:url, id:response.data.ids.tmdb })
+                            }
+                            app.setState({loaded: true});
+                            app.setState( 
+                                app.state 
+                            ) 
+                            app.state 
+                       
+                        })
+                    });
+                   }
                 
             })
             
@@ -87,7 +111,7 @@ export default class SeenScreen extends React.Component{
         
 
         
-        const {movies} = this.state;
+        const {movies,shows} = this.state;
         
         return (
             <Container contentContainerStyle={{
@@ -119,11 +143,14 @@ export default class SeenScreen extends React.Component{
                         <Text style={styles.movieSection}> Movies </Text>
                     </View>
                     <Content >
-                        <SeenMoviesResults movies={movies} />
+                        <ResultsToShow data={movies} navigation={this.props.navigation} />
                     </Content>
                     <View style = {styles.line}>
                         <Text style={styles.movieSection}> Shows </Text>
                     </View>
+                    <Content >
+                        <ResultsToShow data={shows} navigation={this.props.navigation} />
+                    </Content>
                     </View>
                     :
                     <View style={styles.container} >

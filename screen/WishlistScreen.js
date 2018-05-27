@@ -3,7 +3,7 @@ import {StyleSheet, Text, View, ActivityIndicator} from 'react-native';
 import{Icon, Container, Header, Content, Left, Body} from 'native-base';
 import Expo from "expo";
 import axios from "axios/index";
-import SeenMoviesResults from '../components/SeenMoviesResults';
+import ResultsToShow from '../components/seenAndWishlist/ResultsToShow';
 import * as firebase from 'firebase';
 
 
@@ -24,6 +24,7 @@ export default class WishlistScreen extends React.Component{
     state = {
         email : '',
         movies : [],
+        shows: [],
         loaded : false
     }
 
@@ -37,7 +38,7 @@ export default class WishlistScreen extends React.Component{
         .then(function (snapshot) {
             snapshot.forEach(function (data) {
                 
-                console.log("wishlist: " + data.val().id);
+               if(data.val().type == "movie"){
                 let request = 'http://' + api + '/movies/getMovieFromId/'+ data.val().id;
                 axios.get(request).then(response => {
                     request = 'http://' + api + '/movies/getImage/' + response.data.ids.tmdb;
@@ -57,6 +58,29 @@ export default class WishlistScreen extends React.Component{
                    
                     })
                 });
+               }
+               else if (data.val().type == "show"){
+                let request = 'http://' + api + '/shows/getShowFromId/'+ data.val().id;
+                axios.get(request).then(response => {
+                    request = 'http://' + api + '/shows/getImage/' + response.data.ids.tmdb;
+                    axios.get(request).then(response2 => {
+                        if(response2.data.file_path == undefined){
+                            app.state.shows.push({title: response.data.title, image:"https://vignette.wikia.nocookie.net/advenutres-of-powerpuff-girls-z/images/4/4e/Popeye.png/revision/latest/scale-to-width-down/185?cb=20170224034600",id: response.data.ids.tmdb })
+                            }
+                        else {
+                            url = "http://image.tmdb.org/t/p/w185//" + response2.data.file_path;
+                            app.state.shows.push({title: response.data.title, image:url, id:response.data.ids.tmdb })
+                        }
+                        app.setState({loaded: true});
+                        app.setState( 
+                            app.state 
+                        ) 
+                        app.state 
+                   
+                    })
+                });
+               }
+                
                 
             })
             
@@ -81,7 +105,7 @@ export default class WishlistScreen extends React.Component{
         })
     }
     render(){
-        const {movies} = this.state;
+        const {movies,shows} = this.state;
 
         return (
             <Container contentContainerStyle={{
@@ -111,14 +135,14 @@ export default class WishlistScreen extends React.Component{
                         <Text style={styles.movieSection}> Movies </Text>
                     </View>
                     <Content >
-                        <SeenMoviesResults data={movies} navigation={this.props.navigation}/>
+                        <ResultsToShow data={movies} navigation={this.props.navigation}/>
                     </Content>
                     <View style = {styles.line}>
                         <Text style={styles.movieSection}> Shows </Text>
                     </View>
-                    <View>
-                        <Text> Insert shows here</Text>
-                    </View>
+                    <Content >
+                        <ResultsToShow data={shows} navigation={this.props.navigation}/>
+                    </Content>
                     </View>
                     :
                     <View style={styles.container} >
