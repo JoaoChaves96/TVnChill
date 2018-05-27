@@ -1,5 +1,5 @@
 import React from 'react';
-import {Text} from 'react-native';
+import {View,Text,Image} from 'react-native';
 import{Icon, Container, Header, Content, Left, Body} from 'native-base';
 
 export default class MovieScreen extends React.Component{
@@ -24,8 +24,25 @@ export default class MovieScreen extends React.Component{
                 </Header>
 
                 <Content style={{backgroundColor:'#455561'}}>
-                    <Text>{this.props.navigation.state.params.id}</Text>
-
+                    <View style={{marginLeft:'5%'}}>
+                    <View style={{marginTop:'7%',flexDirection:'row'}}>
+                        <Image style={{width:170, height:280}}
+                           source ={{uri:this.props.navigation.state.params.movie.image}}/>
+                        <View style={{marginLeft: '6%'}}>
+                            <Text style={{color:'white', fontWeight:'bold', fontSize:26}}>{this.props.navigation.state.params.movie.title}</Text>
+                            <Text style={{marginTop:'5%', color:'white', fontWeight:'bold', fontSize: 18}}>{this.props.navigation.state.params.movie.year}</Text>
+                            <View style={{height:25, marginTop:'8%', flexDirection:'row', flex:1}}>
+                                <Icon name='star' style={{color:'white'}}/>
+                                <Text style={{marginLeft:'5%', marginTop:'3%', color:'white'}}>{this.props.navigation.state.params.movie.rating}</Text>
+                            </View>
+                            <View style={{height:25, marginTop:'8%', flexDirection:'row', flex:1}}>
+                                <Icon name='ios-desktop' style={{color:'white'}}/>
+                                <Text style={{marginLeft:'5%', marginTop:'3%', color:'white'}}>Add to Wishlist</Text>
+                            </View>
+                        </View>
+                    </View>
+                    <Text style={{marginTop:'3%', marginRight: '4%',color:'white', fontSize:13}}>{this.props.navigation.state.params.movie.overview}</Text>
+                    </View>
                 </Content>
             </Container>
         );

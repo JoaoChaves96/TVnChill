@@ -41,13 +41,13 @@ export default class ResultScreen extends React.Component{
 
                     axios.get(request).then(response3 => {
                         if(response3.data.file_path == undefined){
-                            this.state.movies.push({id:movie.movie.ids.trakt, title: movie.movie.title, rating: response2.data.rating, image:"https://www.unesale.com/ProductImages/Large/notfound.png" })
+                            this.state.movies.push({id:movie.movie.ids.trakt, year: movie.movie.year, overview: movie.movie.overview, title: movie.movie.title, rating: response2.data.rating, image:"https://www.unesale.com/ProductImages/Large/notfound.png" })
                             //this.state.images.push("https://vignette.wikia.nocookie.net/advenutres-of-powerpuff-girls-z/images/4/4e/Popeye.png/revision/latest/scale-to-width-down/185?cb=20170224034600");
                         }
                         else {
                             url = "http://image.tmdb.org/t/p/w185//" + response3.data.file_path;
                             //this.state.images.push(url);
-                            this.state.movies.push({id:movie.movie.ids.trakt, title: movie.movie.title, rating: response2.data.rating, image:url })
+                            this.state.movies.push({id:movie.movie.ids.trakt, year:movie.movie.year, overview: movie.movie.overview, title: movie.movie.title, rating: response2.data.rating, image:url })
                             
                         }
                         this.setState(
