@@ -1,12 +1,12 @@
 import React from 'react';
 import { View,ScrollView } from 'react-native';
-import MovieListItem from './ResultListItem';
+import SeenMovies from './SeenMovies';
 
 const SearchResults = ({movies}) => { 
     
     const movieItems = movies.map(movie => (
-        <MovieListItem
-            key = {movie.movie.ids.slug}
+        <SeenMovies
+            key = {movie.id}
             movie = {movie}
         />
           

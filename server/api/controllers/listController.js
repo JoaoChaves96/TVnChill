@@ -49,3 +49,13 @@ exports.getShowImage = (req, res) => {
   });
   
 }
+
+exports.getMovieFromId = (req, res) => {
+  
+  trakt.movie(req.params.id).then(function(show) {
+    //console.log(show);
+      res.send(show)
+    }).catch(function(err) {
+      console.warn('oh noes', err);
+    });
+};

@@ -30,6 +30,7 @@ export default class ResultScreen extends React.Component{
                 movies: response.data
             });
         });
+        
     }
 
 
