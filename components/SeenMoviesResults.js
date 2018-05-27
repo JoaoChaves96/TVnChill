@@ -2,12 +2,13 @@ import React from 'react';
 import { View,ScrollView } from 'react-native';
 import SeenMovies from './SeenMovies';
 
-const SeenMoviesResults = ({movies}) => { 
+const SeenMoviesResults = ({data,navigation}) => { 
     
-    const movieItems = movies.map(movie => (
+    const movieItems = data.map(movie => (
         <SeenMovies
             key = {movie.id}
-            movie = {movie}
+            data = {movie}
+            navigation = {navigation}
         />
           
     ));
@@ -29,9 +30,14 @@ const SeenMoviesResults = ({movies}) => {
 
 const styles= {
     containerStyle: {
-        marginBottom: 10,
-        marginLeft:10,
-        marginRight:10
+        flex: 1,
+        flexDirection: 'row',
+        flexWrap: 'wrap',
+        alignSelf: 'flex-end',
+        justifyContent: 'space-between',
+        marginRight: '4%',
+        marginLeft: '4%',
+        marginTop: '5%',
        
     }
 }
