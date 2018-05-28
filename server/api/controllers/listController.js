@@ -28,7 +28,6 @@ exports.searchMovie = (req, res) => {
 
 exports.getRating = (req,res) => {
     trakt.movieRatings(req.params.MovieId).then(function (response) {
-        //console.log(response.rating);
         res.send(response);
     }).catch(function (err) {
         console.warn('oh noes', err);
@@ -55,7 +54,6 @@ exports.getMovieImage = (req, res) => {
 exports.getMovieFromId = (req, res) => {
   
   trakt.movie(req.params.id).then(function(show) {
-    //console.log(show);
       res.send(show)
     }).catch(function(err) {
       console.warn('oh noes', err);

@@ -17,7 +17,6 @@ exports.searchShow = (req, res) => {
 
 exports.getShowImage = (req, res) => {
     MovieDB.tvImages({ id: req.params.tmdbId}, (err, response) => {
-      //console.log(response);
        if(response == null) {
         var noImg = 'noImg';
         res.send(noImg);
@@ -30,7 +29,6 @@ exports.getShowImage = (req, res) => {
 
 exports.getRating = (req,res) => {
     trakt.showRatings(req.params.ShowId).then(function (response) {
-        //console.log(response.rating);
         res.send(response);
     }).catch(function (err) {
         console.warn('oh noes', err);
@@ -40,7 +38,6 @@ exports.getRating = (req,res) => {
 exports.getShowFromId = (req, res) => {
   
     trakt.show(req.params.id).then(function(show) {
-      //console.log(show);
         res.send(show)
       }).catch(function(err) {
         console.warn('oh noes', err);

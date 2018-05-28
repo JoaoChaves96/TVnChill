@@ -22,7 +22,7 @@ export default class FeedScreen extends React.Component{
     }
 
     processArray (arr) {
-        console.log('inside process array')
+       
         let app = this
         for (i = 1; i < arr.length; i++) {
             app.loadWithId(arr[i])
@@ -32,8 +32,7 @@ export default class FeedScreen extends React.Component{
 
     loadFriends (facebookId) {
         let app = this
-        console.log('inside loadFriends')
-        console.log(facebookId)
+      
         let friends_list = firebase.database().ref('friends/' + facebookId);
 
         return friends_list.once('value')
@@ -48,12 +47,9 @@ export default class FeedScreen extends React.Component{
     }
 
     sortFeed (feed) {
-        console.log('inside sortFeed')
-        console.log(feed)
-        console.log(this.state)
+      
         if(feed.length !== 0) {
             for (let i = 0; i < feed.length; i++) {
-                console.log('///////// Adding to feed...')
                 this.state.feed.push(feed[i])
             }
         }
@@ -61,8 +57,7 @@ export default class FeedScreen extends React.Component{
 
     getFeed (user_key, name) {
         let app = this
-        console.log('inside get Feed!')
-        console.log(user_key)
+
 
         let db_seen = firebase.database().ref('users').child(user_key).child('seen')
         return db_seen.once('value')
@@ -70,8 +65,6 @@ export default class FeedScreen extends React.Component{
                 let feed = []
                 snapshot.forEach(function (data) {
                     let d = new Date(data.val().date)
-                    console.log('id!!!!!')
-                    console.log(data.val().id)
                     let obj = {
                         id: data.val().id,
                         type: data.val().type,
@@ -87,8 +80,6 @@ export default class FeedScreen extends React.Component{
 
     loadWithId (id) {
         let app = this
-        console.log('inside loadWithId')
-        console.log(id)
         let db_user = firebase.database().ref('users')
         return db_user.once('value') 
         .then(function(snapshot) { 
@@ -107,8 +98,6 @@ export default class FeedScreen extends React.Component{
 
         for(let i = 0; i < app.state.feed.length; i++) {
             let o = app.state.feed[i]
-            console.log('OBJECT')
-            console.log(o)
 
             if (o.type === 'movie') {
                 let request = 'http://' + api + '/movies/getMovieFromId/' + o.id
@@ -118,35 +107,35 @@ export default class FeedScreen extends React.Component{
                 let request = 'http://' + api + '/shows/getShowFromId/' + o.id
                 promises.push( axios.get(request))
             }
-
-            let request = 'http://' + api + '/movies/getMovieFromId/' + o.id
-
-            promises.push( axios.get(request))
         }
 
         axios.all(promises).then(function(results) {
-            let j = 0
-            results.forEach(function(response) {
+
+
+            for(let j = 0; j < results.length; j++) {
                 let temp = app.state.feed[j]
                 let obj= {
                     id: temp.id,
                     type: temp.type,
                     name: temp.user,
                     date: temp.date,
-                    title: response.data.title
+                    title: results[j].data.title
                 }
-                arr.push(obj)
-                j++
-            })
-            app.state.feed = arr
+                arr.push(obj) 
+            }
+           
+            setTimeout(function(){
+
+                console.log(arr)
+                app.state.feed = arr
+                }, 1500);
         })
     }
 
     test () {
         let user = firebase.auth().currentUser
         let app = this
-        console.log('firsts')
-        console.log(this.state)
+
         let aux = []
         let facebookId = ''
         let db_user = firebase.database().ref('users');
@@ -154,7 +143,6 @@ export default class FeedScreen extends React.Component{
                 .then(function(snapshot) {
                     snapshot.forEach(function (data) {
                         if (data.val().email.toUpperCase() == user.email.toUpperCase()) {
-                            console.log(data.val().facebook_id)
                             return app.loadFriends(data.val().facebook_id)
                         }
                     })
@@ -172,13 +160,7 @@ export default class FeedScreen extends React.Component{
                 app.setState(
                     app.state
                 )
-                app.state
-                console.log(' ------FEED--------')
-                console.log('|                  |')
-                console.log('|                  |')
-                console.log(' ------------------')
-                console.log(app.state)
-                }, 2000);
+                }, 3000);
             }, 3000);
     }
 

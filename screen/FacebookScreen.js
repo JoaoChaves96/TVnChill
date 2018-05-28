@@ -75,11 +75,10 @@ export default class FacebookScreen extends React.Component{
         var db_user = firebase.database().ref('users');
         db_user.on('value', function (snapshot) {
           snapshot.forEach(function (data) {
-            console.log(data.val().email);
-            console.log(user.email);
+           
             if (data.val().email.toUpperCase() == user.email.toUpperCase()) {
               var new_ref = firebase.database().ref('users/' + data.key);
-              console.log('facebook id line.151: ' + info.id);
+             
               new_ref.child('facebook_id').set(info.id);
             }
           })
@@ -98,7 +97,7 @@ export default class FacebookScreen extends React.Component{
         } = await Expo.Facebook.logInWithReadPermissionsAsync('423732801373177', {
           permissions: ['public_profile'],
         });
-        console.log(type)
+      
         if (type === 'success') {
           console.log('success logging in')
           this.callGraph(token);

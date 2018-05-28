@@ -15,7 +15,6 @@ export default class loginScreen extends React.Component {
         const {email, password} = this.state;
         firebase.auth().signInWithEmailAndPassword(email, password)
             .then(() => {
-                console.log('Logged in successfully');
                 this.setState({error: '', loading: false});
                 this.props.navigation.navigate('FeedScreen');
             })

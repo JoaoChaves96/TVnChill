@@ -31,17 +31,9 @@ const api = manifest.packagerOpts.dev
   ? manifest.debuggerHost.split(`:`).shift().concat(`:3000`)
   : `api.example.com`;
 
-  console.log(api)
+  
 
-  let request = 'http://' + api + '/movies/getImage/' + '20526';
 
-axios.get(request)
-  .then(function (response) {
-     //console.log(response); 
-  })
-  .catch(function (error) {
-    console.log(error);
-  });
 
 firebase.initializeApp({
   apiKey: "AIzaSyDIrsjVU1pDbF8CKU8Mjc5Z3tMn-ApkbHg",
@@ -83,9 +75,6 @@ const Drawer = DrawerNavigator({
         },
         Wishlist: {
             screen: WishlistScreen,
-        },
-        Profile : {
-            screen: ProfileScreen,
         },
         Facebook: {
             screen: FacebookScreen,

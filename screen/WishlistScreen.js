@@ -37,7 +37,6 @@ export default class WishlistScreen extends React.Component{
         firebase.database().ref('users').child(key).child('wishlist').once('value')
         .then(function (snapshot) {
             snapshot.forEach(function (data) {
-                console.log(data.val().type);
                if(data.val().type == "movie"){
                 let request = 'http://' + api + '/movies/getMovieFromId/'+ data.val().id;
                 axios.get(request).then(response => {

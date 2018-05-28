@@ -4,13 +4,7 @@ import React from 'react';
 
     searchMovie = term =>{
         console.log("Trakt received " + term);
-        // trakt.search.text({
-            //   query: term,
-            //   type: 'movie'
-            // }).then(response => {
-            //   // Contains Array[] response from API (search data)
-        // });
-        //return response;
+        
     }
 
 }

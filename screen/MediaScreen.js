@@ -2,16 +2,19 @@ import React from 'react';
 import {View,Text,Image, TouchableHighlight} from 'react-native';
 import{Icon, Container, Header, Content, Left, Body} from 'native-base';
 import firebase from 'firebase';
+import Toast from 'react-native-simple-toast';
 
 export default class MediaScreen extends React.Component{
     addtToWishlist = (user_key, id) => {
-        console.log("É MOVIE" + this.props.navigation.state.params.isMovie);
+        
         if(this.props.navigation.state.params.isMovie == true){
             let obj  = {
                 id: id,
                 type: 'movie'
             }
+
             firebase.database().ref('users/' + user_key).child('wishlist').push(obj)
+            Toast.show('MOVIE added to WISHLIST!');
         }
         else if(this.props.navigation.state.params.isMovie == false){
             let obj  = {
@@ -19,6 +22,7 @@ export default class MediaScreen extends React.Component{
                 type: 'show'
             }
             firebase.database().ref('users/' + user_key).child('wishlist').push(obj)
+            Toast.show('SHOW added to WISHLIST!');
         }
         
         
@@ -33,6 +37,7 @@ export default class MediaScreen extends React.Component{
             type: 'movie'
         }
         firebase.database().ref('users/' + user_key).child('seen').push(obj)
+        Toast.show('MOVIE added to WATCHING LIST!');
     } else if(this.props.navigation.state.params.isMovie == false){
         let obj = {
             id: id,
@@ -40,6 +45,7 @@ export default class MediaScreen extends React.Component{
             type: 'show'
         }
         firebase.database().ref('users/' + user_key).child('seen').push(obj)
+        Toast.show('SHOW added to WATCHING LIST!');
     }
         
     }

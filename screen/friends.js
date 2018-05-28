@@ -30,7 +30,6 @@ export default class friendsScreen extends Component {
           friends_list.on('value', function (snapshot) {
             var friends = snapshot.val().friends_list;
 
-            console.log(friends);
 
             var split = friends.split(' ');
 
